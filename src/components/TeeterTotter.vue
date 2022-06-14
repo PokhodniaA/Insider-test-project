@@ -16,6 +16,8 @@ export default class TeeterTotter extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+// TODO: Add func to adapt width to px 1m = 60px
+
 .teeter {
   display: flex;
   flex-direction: column;
@@ -23,9 +25,8 @@ export default class TeeterTotter extends Vue {}
   position: relative;
   width: 100%;
 
-  // TODO: Add func to adapt width to px 1m = 60px
   &__hr {
-    width: 600px;
+    width: 100%;
     height: 1px;
     background-color: red;
   }
