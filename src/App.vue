@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <Header />
+    <app-header />
+    <playground />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Header from '@/components/Header.vue';
+import AppHeader from '@/components/Header.vue';
+import Playground from '@/components/Playground.vue'
 
 @Component({
   components: {
-    Header
+    AppHeader,
+    Playground
   },
 })
 export default class App extends Vue {}
@@ -18,4 +21,7 @@ export default class App extends Vue {}
 
 <style lang="scss">
 @import "scss/index.scss";
+#app {
+  height: 100%;
+}
 </style>
