@@ -1,0 +1,11 @@
+@import "normalize";
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  min-width: 800px;
+  max-width: 1200px;
+  margin: auto;
+}
