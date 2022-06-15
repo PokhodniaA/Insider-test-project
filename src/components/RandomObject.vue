@@ -3,8 +3,10 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Watch, Vue} from "vue-property-decorator";
+import {State} from "vuex-class";
 import {getRandomNumber} from "@/utils/numbers.utils";
+import {GameStatus} from "@/interfaces/storeInterface";
 
 export enum objectTypes {
   CIRCLE = 'circle',
@@ -17,6 +19,8 @@ export enum objectTypes {
   },
 })
 export default class RandomObject extends Vue {
+  @State('gameStatus') private gameStatus!: GameStatus;
+
   private objectType: objectTypes | null = null;
   private weight: number | null = null;
 
@@ -28,11 +32,13 @@ export default class RandomObject extends Vue {
     return this.objectType
   }
 
-  public mounted() {
+  /**
+   * Generate new object
+   * @private
+   */
+  private generateObject() {
     this.setRandomObject();
     this.setRandomWeight();
-    console.log(this.objectType, 'this.objectType')
-    console.log(this.weight, 'weight')
   }
 
   /**
@@ -60,6 +66,13 @@ export default class RandomObject extends Vue {
    */
   private setRandomWeight() {
     this.weight = getRandomNumber(1, 11);
+  }
+
+  @Watch('gameStatus')
+  onGameStatusChanged(val: GameStatus) {
+    if (val === GameStatus.PLAY) {
+      this.generateObject();
+    }
   }
 }
 </script>

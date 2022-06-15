@@ -15,8 +15,10 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
+import {Action} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
+import {START_GAME} from "@/store/actions.const";
 
 @Component({
   components: {
@@ -26,6 +28,8 @@ import RandomObject from '@/components/RandomObject.vue'
 })
 
 export default class Playground extends Vue {
+  @Action(START_GAME) startNewGame!: () => void;
+
   public mounted() {
     this.$root.$on('start-game', this.startGame);
   }
@@ -35,7 +39,7 @@ export default class Playground extends Vue {
   }
 
   private startGame() {
-    //empty
+    this.startNewGame();
   }
 }
 </script>
