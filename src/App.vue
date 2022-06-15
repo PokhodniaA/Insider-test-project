@@ -23,5 +23,6 @@ export default class App extends Vue {}
 @import "scss/index.scss";
 #app {
   height: 100%;
+  max-height: 100vh;
 }
 </style>

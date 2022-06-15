@@ -1,7 +1,13 @@
 <template>
   <div class="playground playground-container">
-    // TODO: Dived for the left and right side
-    <random-object />
+    <div class="playground__game">
+      <div class="playground__field">
+        <random-object />
+      </div>
+      <div class="playground__field">
+        <random-object />
+      </div>
+    </div>
 
     <teeter-totter class="playground__teeter"/>
   </div>
@@ -19,14 +25,37 @@ import RandomObject from '@/components/RandomObject.vue'
   },
 })
 
-export default class Playground extends Vue {}
+export default class Playground extends Vue {
+  public mounted() {
+    this.$root.$on('start-game', this.startGame);
+  }
+
+  public beforeDestroy() {
+    this.$root.$off('start-game', this.startGame);
+  }
+
+  private startGame() {
+    //empty
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .playground {
+  padding-bottom: 50px;
   &__teeter {
-    position: absolute;
-    bottom: 10%;
+
+  }
+
+  &__game {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  &__field {
+    width: 50%;
+    position: relative;
   }
 }
 
@@ -39,5 +68,7 @@ export default class Playground extends Vue {}
   width: 600px;
   margin: auto;
   height: calc(100vh - 35px);
+  display: flex;
+  flex-direction: column;
 }
 </style>

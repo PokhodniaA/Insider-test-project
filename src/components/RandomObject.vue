@@ -59,7 +59,7 @@ export default class RandomObject extends Vue {
    * @private
    */
   private setRandomWeight() {
-    this.weight = getRandomNumber(1, 10);
+    this.weight = getRandomNumber(1, 11);
   }
 }
 </script>
@@ -72,6 +72,7 @@ export default class RandomObject extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
 }
 
 .circle {
