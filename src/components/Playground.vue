@@ -37,12 +37,14 @@ import {
   FIELD_HEIGHT,
   FIELD_WIDTH,
   GAME_STATUS, GET_CURRENT_COMPUTER_OBJECT, GET_CURRENT_USER_OBJECT,
-  GET_GAME_SPEED,
+  GET_GAME_SPEED, GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
+import TeeterTotterClass from "@/classes/TeeterTotter";
 import {CONTINUE_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
 
 export enum Keyboard {
   ENTER = 'Enter',
@@ -67,6 +69,7 @@ export default class Playground extends Vue {
   @Getter(GET_GAME_SPEED) private gameSpeed !: number;
   @Getter(GET_CURRENT_USER_OBJECT) private userObject !: GameObject;
   @Getter(GET_CURRENT_COMPUTER_OBJECT) private computerObject !: GameObject;
+  @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
 
   @Action(START_GAME) private startGame !: () => void;
   @Action(PAUSE_GAME) private pauseGame !: () => void;
@@ -134,13 +137,25 @@ export default class Playground extends Vue {
   }
 
   private onTick() {
+    // TODO: поставить проверку в начале
     this.userObject.yPos = this.userObject.y + this.fieldHeight / 10
     this.computerObject.yPos = this.computerObject.y + this.fieldHeight / 10
 
     if (
-        this.userObject.y + this.userObject.heigth >= this.fieldHeight
-        || this.computerObject.y + this.userObject.heigth >= this.fieldHeight
+        this.userObject.yPos >= this.fieldHeight
+        || this.computerObject.yPos >= this.fieldHeight
     ) {
+      // TODO: Упали на лестницу
+      const userShoulder = this.teeterTotter.getMomentShoulder(
+          getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
+      );
+      const computerShoulder = this.teeterTotter.getMomentShoulder(this.computerObject.xPos);
+
+      const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
+      const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
+      this.teeterTotter.setMomentum(userMomentum, computerMomentum)
+      console.log(this.teeterTotter.isContinueGame)
+      console.log(this.teeterTotter.rotateAngle)
       this.onPauseGame()
     }
   }
@@ -185,6 +200,8 @@ export default class Playground extends Vue {
     width: 100%;
     height: 100%;
     display: flex;
+    z-index: 1;
+    border-bottom: 1px solid red;
   }
 
   &__field {

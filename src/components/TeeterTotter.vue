@@ -1,18 +1,28 @@
 <template>
 <div class="teeter">
-  <div class="teeter__hr" />
+  <div :style="angleStyle" class="teeter__hr" />
   <div class="teeter__triangle" />
 </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
+import {Getter} from "vuex-class";
+import {GET_TEETER_TOTTER} from "@/store/getters.const";
+import TeeterTotterClass from "@/classes/TeeterTotter";
 
-@Component({
-  components: {
-  },
-})
-export default class TeeterTotter extends Vue {}
+@Component({})
+export default class TeeterTotter extends Vue {
+  @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
+
+  private get angleStyle() {
+    if (!this.teeterTotter) {
+      return '';
+    }
+    return `transform: rotate(${this.teeterTotter.rotateAngle}deg);`
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -27,8 +37,8 @@ export default class TeeterTotter extends Vue {}
 
   &__hr {
     width: 100%;
-    height: 1px;
-    background-color: red;
+    height: 10px;
+    background-color: #CCC;
   }
 
   &__triangle {

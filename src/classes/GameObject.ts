@@ -1,4 +1,4 @@
-import {getRandomNumber} from "@/utils/numbers.utils";
+import {getRandomNumber} from "@/utils/calculates.utils";
 import store from "@/store";
 import {FIELD_WIDTH} from "@/store/getters.const";
 
@@ -85,6 +85,13 @@ export default class GameObject {
         return this.sizes.height;
     }
 
+    /**
+     * Get real center x position
+     */
+    public get xPos() {
+        return Math.floor(this.x + (this.width / 2));
+    }
+
     public set xPos(newX: number) {
         let x = newX;
         if (newX <= 0) {
@@ -94,6 +101,10 @@ export default class GameObject {
         }
 
         this.x = x;
+    }
+
+    public get yPos() {
+        return this.y + this.heigth;
     }
 
     public set yPos(newY: number) {

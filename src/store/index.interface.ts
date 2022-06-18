@@ -1,4 +1,5 @@
 import GameObject from "@/classes/GameObject";
+import TeeterTotter from "@/classes/TeeterTotter";
 
 export interface IState {
     gameStatus: GameStatus,
@@ -20,7 +21,8 @@ export interface IGameState {
     objects: {
         user: Array<GameObject>,
         computer: Array<GameObject>
-    }
+    },
+    teeterTotter: TeeterTotter|null
 }
 
 export enum GameStatus {
