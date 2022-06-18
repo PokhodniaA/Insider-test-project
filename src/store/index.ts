@@ -36,7 +36,7 @@ const newGame = () => ({
     computer: []
   },
   teeterTotter: null,
-  gameSpeed: 500
+  gameSpeed: 1000 / 60
 });
 
 const state: IState = {
@@ -89,7 +89,7 @@ const mutations: MutationTree<IState> = {
     s.game = newGame();
   },
   [INCREASE_GAME_SPEED](s) {
-    s.game.gameSpeed /= 1.5;
+    s.game.gameSpeed /= 1.3;
   },
   [INCREASE_LEVEL](s) {
     s.game.level++
