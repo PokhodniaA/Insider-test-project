@@ -24,11 +24,13 @@ export default class Header extends Vue {
   private get title() {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        return 'Play'
+      case GameStatus.END:
+      case GameStatus.NEW:
+        return 'Play';
       case GameStatus.PLAY:
-        return 'PAUSE'
+        return 'PAUSE';
       default:
-        return 'Play'
+        return 'Play';
     }
   }
 
@@ -36,6 +38,7 @@ export default class Header extends Vue {
     // TODO: Change toggle on play
     switch (this.gameStatus) {
       case GameStatus.END:
+      case GameStatus.NEW:
         this.startNewGame();
         break;
       case GameStatus.PAUSE:

@@ -40,7 +40,7 @@ const newGame = () => ({
 });
 
 const state: IState = {
-  gameStatus: GameStatus.END,
+  gameStatus: GameStatus.NEW,
   game: newGame(),
   field: {
     width: 600,
@@ -76,9 +76,9 @@ const getters: GetterTree<IState, IState> = {
   [GET_TEETER_TOTTER](s) {
     return s.game.teeterTotter;
   },
-   [GET_LEVEL](s) {
+  [GET_LEVEL](s) {
     return s.game.level
-   }
+  }
 }
 
 const mutations: MutationTree<IState> = {

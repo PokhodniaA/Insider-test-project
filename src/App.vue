@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <app-header />
-    <playground />
+    <game-header />
+    <game-playground />
+    <game-fade />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import AppHeader from '@/components/Header.vue';
-import Playground from '@/components/Playground.vue'
+import GameHeader from '@/components/GameHeader.vue';
+import GamePlayground from '@/components/GamePlayground.vue'
+import GameFade from "@/components/GameFade.vue";
 
 @Component({
   components: {
-    AppHeader,
-    Playground
+    GameHeader,
+    GamePlayground,
+    GameFade
   },
 })
 export default class App extends Vue {}
