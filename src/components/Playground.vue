@@ -1,11 +1,25 @@
 <template>
   <div class="playground playground-container">
-    <div class="playground__game">
+    <div ref="playground" class="playground__game">
       <div class="playground__field">
-        <random-object />
+        <random-object
+            v-for="(user, idx) in users"
+            :key="idx + 'user'"
+            :x="user.x"
+            :y="user.y"
+            :type="user.objectType"
+            :weight="user.weight"
+        />
       </div>
       <div class="playground__field">
-        <random-object />
+        <random-object
+            v-for="(ai, idx) in computers"
+            :key="idx + 'comp'"
+            :x="ai.x"
+            :y="ai.y"
+            :type="ai.objectType"
+            :weight="ai.weight"
+        />
       </div>
     </div>
 
@@ -14,11 +28,13 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import {Action} from 'vuex-class'
+import {Component, Ref, Vue, Watch} from "vue-property-decorator";
+import {Getter} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
-import {START_GAME} from "@/store/actions.const";
+import {COMPUTER_OBJECTS, GAME_STATUS, USER_OBJECTS} from "@/store/getters.const";
+import {GameStatus} from "@/store/index.interface";
+import GameObject from "@/helpers/GameObject";
 
 @Component({
   components: {
@@ -28,18 +44,34 @@ import {START_GAME} from "@/store/actions.const";
 })
 
 export default class Playground extends Vue {
-  @Action(START_GAME) startNewGame!: () => void;
+  @Getter(GAME_STATUS) private gameStatus !:GameStatus;
+  @Getter(USER_OBJECTS) private users !:Array<GameObject>;
+  @Getter(COMPUTER_OBJECTS) private computers !:Array<GameObject>;
 
-  public mounted() {
-    this.$root.$on('start-game', this.startGame);
+  // TODO: Change on 60 on computed height
+  @Ref() playground!: {
+    clientHeight: number
   }
 
-  public beforeDestroy() {
-    this.$root.$off('start-game', this.startGame);
-  }
+  private ticker: number|null = null;
+  private playgroundHeight = 0;
 
+  // private OnTick() {
+  //   const yPos =  this.playgroundHeight / 10 // 60 = height of element
+  //   if (this.yPos + 60 >= this.playgroundHeight) {
+  //     this.yPos = 0;
+  //     if (this.ticker) {
+  //       clearInterval(this.ticker);
+  //     }
+  //     return;
+  //   }
+  //
+  //   this.yPos += yPos;
+  // }
+
+  @Watch('gameStatus')
   private startGame() {
-    this.startNewGame();
+    console.log('startGame')
   }
 }
 </script>
@@ -70,8 +102,8 @@ export default class Playground extends Vue {
   max-width: 600px;
   min-width: 600px;
   width: 600px;
-  margin: auto;
-  height: calc(100vh - 35px);
+  margin: 20px auto;
+  height: 800px;
   display: flex;
   flex-direction: column;
 }

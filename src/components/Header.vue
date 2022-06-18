@@ -1,19 +1,19 @@
 <template>
 <header class="header">
   <div class="container">
-    <button @click="startGame">Play</button>
+    <button @click="startNewGame">Play</button>
   </div>
 </header>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {Action} from "vuex-class";
+import {START_GAME} from "@/store/actions.const";
 
 @Component({})
 export default class Header extends Vue {
-  private startGame() {
-    this.$root.$emit('start-game')
-  }
+  @Action(START_GAME) startNewGame!: () => void;
 }
 </script>
 

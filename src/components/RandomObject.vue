@@ -1,78 +1,27 @@
 <template>
-  <div class="object" :class="objectClass">{{weight}}</div>
+  <div class="object" :class="objectClass" :style="position">{{weight}}</div>
 </template>
 
 <script lang="ts">
-import {Component, Watch, Vue} from "vue-property-decorator";
-import {State} from "vuex-class";
-import {getRandomNumber} from "@/utils/numbers.utils";
-import {GameStatus} from "@/interfaces/storeInterface";
-
-export enum objectTypes {
-  CIRCLE = 'circle',
-  TRIANGLE = 'triangle',
-  RECTANGLE = 'rectangle',
-}
+import {Component, Prop, Vue} from "vue-property-decorator";
+import {objectTypes} from "@/helpers/GameObject";
 
 @Component({
   components: {
   },
 })
 export default class RandomObject extends Vue {
-  @State('gameStatus') private gameStatus!: GameStatus;
+  @Prop({type: Number}) readonly x?: number;
+  @Prop({type: Number}) readonly y?: number;
+  @Prop({type: Number}) readonly weight?: number;
+  @Prop({type: String}) readonly type?: objectTypes;
 
-  private objectType: objectTypes | null = null;
-  private weight: number | null = null;
+  private get position() {
+    return `left: ${this.x}px; top: ${this.y}px`
+  }
 
-  /**
-   * Get object class
-   * @private
-   */
   private get objectClass() {
-    return this.objectType
-  }
-
-  /**
-   * Generate new object
-   * @private
-   */
-  private generateObject() {
-    this.setRandomObject();
-    this.setRandomWeight();
-  }
-
-  /**
-   * Set current object
-   * @private
-   */
-  private setRandomObject() {
-    const type = getRandomNumber(1, 4);
-    switch (type) {
-      case 1:
-        this.objectType = objectTypes.CIRCLE;
-        break;
-      case 2:
-        this.objectType = objectTypes.TRIANGLE;
-        break;
-      case 3:
-        this.objectType = objectTypes.RECTANGLE;
-        break;
-    }
-  }
-
-  /**
-   * Set random weight
-   * @private
-   */
-  private setRandomWeight() {
-    this.weight = getRandomNumber(1, 11);
-  }
-
-  @Watch('gameStatus')
-  onGameStatusChanged(val: GameStatus) {
-    if (val === GameStatus.PLAY) {
-      this.generateObject();
-    }
+    return this.type;
   }
 }
 </script>
