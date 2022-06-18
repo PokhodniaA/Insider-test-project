@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {objectTypes} from "@/helpers/GameObject";
+import {objectTypes} from "@/classes/GameObject";
 
 @Component({
   components: {

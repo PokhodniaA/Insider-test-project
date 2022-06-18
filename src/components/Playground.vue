@@ -1,5 +1,5 @@
 <template>
-  <div class="playground playground-container">
+  <div class="playground playground-container" :style="containerStyles">
     <div class="playground__game" :style="gameAreaStyles">
       <div class="playground__field">
         <random-object
@@ -32,9 +32,16 @@ import {Component, Vue, Watch} from "vue-property-decorator";
 import {Getter} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
-import {COMPUTER_OBJECTS, FIELD_HEIGHT, GAME_STATUS, GET_GAME_SPEED, USER_OBJECTS} from "@/store/getters.const";
+import {
+  COMPUTER_OBJECTS,
+  FIELD_HEIGHT,
+  FIELD_WIDTH,
+  GAME_STATUS,
+  GET_GAME_SPEED,
+  USER_OBJECTS
+} from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
-import GameObject from "@/helpers/GameObject";
+import GameObject from "@/classes/GameObject";
 
 @Component({
   components: {
@@ -48,6 +55,7 @@ export default class Playground extends Vue {
   @Getter(USER_OBJECTS) private users !:Array<GameObject>;
   @Getter(COMPUTER_OBJECTS) private computers !:Array<GameObject>;
   @Getter(FIELD_HEIGHT) private fieldHeight !: number;
+  @Getter(FIELD_WIDTH) private fieldWidth !: number;
   @Getter(GET_GAME_SPEED) private gameSpeed !: number;
 
   private ticker: number|null = null;
@@ -56,8 +64,16 @@ export default class Playground extends Vue {
     return `height: ${this.fieldHeight}px;`
   }
 
+  private get containerStyles() {
+    return `
+    width:${this.fieldWidth}px;
+    min-width:${this.fieldWidth}px;
+    max-width:${this.fieldWidth}px;
+    `;
+  }
+
   private onTick() {
-    console.log('onTicke')
+    console.log('tick')
   }
 
   private startGame() {
@@ -111,9 +127,6 @@ export default class Playground extends Vue {
 // TODO: Add func to adapt width to px 1m = 60px
 .playground-container {
   position: relative;
-  max-width: 600px;
-  min-width: 600px;
-  width: 600px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;

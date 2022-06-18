@@ -3,7 +3,10 @@ import GameObject from "@/helpers/GameObject";
 export interface IState {
     gameStatus: GameStatus,
     game: IGameState,
-    fieldHeight: number,
+    field: {
+        width: number,
+        height: number
+    },
 }
 
 export interface IGameState {
