@@ -4,9 +4,9 @@ import { ActionTree } from 'vuex';
 import { MutationTree } from 'vuex';
 
 import {GameStatus, IState, GameUser} from "./index.interface";
-import {ADD_GAME_OBJECT, START_GAME} from "@/store/actions.const";
-import {RESET_STATE, START_GAME as SET_START_GAME} from "@/store/mutation.const";
-import {COMPUTER_OBJECTS, GAME_STATUS, USER_OBJECTS} from "@/store/getters.const";
+import {ADD_GAME_OBJECT, PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {CHANGE_STATUS, RESET_STATE} from "@/store/mutation.const";
+import {COMPUTER_OBJECTS, FIELD_HEIGHT, GAME_STATUS, GET_GAME_SPEED, USER_OBJECTS} from "@/store/getters.const";
 import GameObject from "@/helpers/GameObject";
 
 Vue.use(Vuex)
@@ -21,12 +21,14 @@ const newGame = () => ({
   objects: {
     user: [],
     computer: []
-  }
+  },
+  gameSpeed: 1000
 });
 
 const state: IState = {
   gameStatus: GameStatus.PAUSE,
   game: newGame(),
+  fieldHeight: 600,
 };
 
 const getters: GetterTree<IState, IState> = {
@@ -38,12 +40,18 @@ const getters: GetterTree<IState, IState> = {
   },
   [COMPUTER_OBJECTS](s) {
     return s.game.objects.computer
+  },
+  [FIELD_HEIGHT](s) {
+    return s.fieldHeight
+  },
+  [GET_GAME_SPEED](s) {
+    return s.game.gameSpeed
   }
 }
 
 const mutations: MutationTree<IState> = {
-  [SET_START_GAME](s) {
-    s.gameStatus = GameStatus.PLAY;
+  [CHANGE_STATUS](s, status: GameStatus) {
+    s.gameStatus = status;
   },
   [RESET_STATE](s) {
     s.game = newGame();
@@ -55,7 +63,10 @@ const actions: ActionTree<IState, IState> = {
     commit(RESET_STATE);
     dispatch(ADD_GAME_OBJECT, GameUser.USER);
     dispatch(ADD_GAME_OBJECT, GameUser.COMPUTER);
-    commit(SET_START_GAME);
+    commit(CHANGE_STATUS, GameStatus.PLAY);
+  },
+  [PAUSE_GAME]({commit}) {
+    commit(CHANGE_STATUS, GameStatus.PAUSE);
   },
   [ADD_GAME_OBJECT]({state}, type: GameUser) {
     const gameObject = new GameObject({

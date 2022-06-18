@@ -3,11 +3,13 @@ import GameObject from "@/helpers/GameObject";
 export interface IState {
     gameStatus: GameStatus,
     game: IGameState,
+    fieldHeight: number,
 }
 
 export interface IGameState {
     score: number,
     level: number,
+    gameSpeed: number,
     power: {
         user: number,
         computer: number

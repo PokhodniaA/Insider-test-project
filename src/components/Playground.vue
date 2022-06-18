@@ -1,6 +1,6 @@
 <template>
   <div class="playground playground-container">
-    <div ref="playground" class="playground__game">
+    <div class="playground__game" :style="gameAreaStyles">
       <div class="playground__field">
         <random-object
             v-for="(user, idx) in users"
@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue, Watch} from "vue-property-decorator";
+import {Component, Vue, Watch} from "vue-property-decorator";
 import {Getter} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
-import {COMPUTER_OBJECTS, GAME_STATUS, USER_OBJECTS} from "@/store/getters.const";
+import {COMPUTER_OBJECTS, FIELD_HEIGHT, GAME_STATUS, GET_GAME_SPEED, USER_OBJECTS} from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 import GameObject from "@/helpers/GameObject";
 
@@ -47,32 +47,44 @@ export default class Playground extends Vue {
   @Getter(GAME_STATUS) private gameStatus !:GameStatus;
   @Getter(USER_OBJECTS) private users !:Array<GameObject>;
   @Getter(COMPUTER_OBJECTS) private computers !:Array<GameObject>;
-
-  // TODO: Change on 60 on computed height
-  @Ref() playground!: {
-    clientHeight: number
-  }
+  @Getter(FIELD_HEIGHT) private fieldHeight !: number;
+  @Getter(GET_GAME_SPEED) private gameSpeed !: number;
 
   private ticker: number|null = null;
-  private playgroundHeight = 0;
 
-  // private OnTick() {
-  //   const yPos =  this.playgroundHeight / 10 // 60 = height of element
-  //   if (this.yPos + 60 >= this.playgroundHeight) {
-  //     this.yPos = 0;
-  //     if (this.ticker) {
-  //       clearInterval(this.ticker);
-  //     }
-  //     return;
-  //   }
-  //
-  //   this.yPos += yPos;
-  // }
+  private get gameAreaStyles() {
+    return `height: ${this.fieldHeight}px;`
+  }
+
+  private onTick() {
+    console.log('onTicke')
+  }
+
+  private startGame() {
+    this.ticker = setInterval(this.onTick, this.gameSpeed)
+  }
+
+  private endGame() {
+    if (this.ticker === null) {
+      return;
+    }
+
+    clearInterval(this.ticker);
+    this.ticker = null;
+  }
 
   @Watch('gameStatus')
-  private startGame() {
-    console.log('startGame')
+  private changeStatus() {
+    switch (this.gameStatus) {
+      case GameStatus.PAUSE:
+        this.endGame();
+        break;
+      case GameStatus.PLAY:
+        this.startGame();
+        break;
+    }
   }
+
 }
 </script>
 
@@ -103,7 +115,6 @@ export default class Playground extends Vue {
   min-width: 600px;
   width: 600px;
   margin: 20px auto;
-  height: 800px;
   display: flex;
   flex-direction: column;
 }
