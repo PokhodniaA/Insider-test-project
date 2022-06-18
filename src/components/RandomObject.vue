@@ -19,15 +19,19 @@ export default class RandomObject extends Vue {
   @Prop({type: Number}) readonly height?: number;
 
   private get dimensions() {
-    return `width:${this.width}; height:${this.height};`
+    return `width:${this.width}; height:${this.height};`;
   }
 
   private get position() {
-    return `left: ${this.x}px; top: ${this.y}px;`
+    return `left: ${this.x}px; top: ${this.y}px;`;
+  }
+
+  private get animateChangeX() {
+    return `transition: left .1s;`;
   }
 
   private get objectStyles() {
-    return this.dimensions + this.position
+    return this.dimensions + this.position + this.animateChangeX;
   }
 
   private get objectClass() {

@@ -141,8 +141,8 @@ export default class Playground extends Vue {
 
   private onTick() {
     // TODO: поставить проверку в начале
-    this.userObject.yPos = this.userObject.y + this.fieldHeight / 10
-    this.computerObject.yPos = this.computerObject.y + this.fieldHeight / 10
+    this.userObject.yPos = this.userObject.y + 2
+    this.computerObject.yPos = this.computerObject.y + 2
 
     if (
         this.userObject.yPos >= this.fieldHeight
