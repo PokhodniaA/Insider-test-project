@@ -11,13 +11,8 @@ export interface IState {
 }
 
 export interface IGameState {
-    score: number,
     level: number,
     gameSpeed: number,
-    power: {
-        user: number,
-        computer: number
-    },
     objects: {
         user: Array<GameObject>,
         computer: Array<GameObject>

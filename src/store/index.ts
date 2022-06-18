@@ -6,11 +6,11 @@ import {
   ADD_GAME_OBJECT,
   CONTINUE_GAME,
   END_GAME,
-  PAUSE_GAME,
+  PAUSE_GAME, SET_NEXT_LEVEL,
   SET_TEETER_TOTTER,
   START_GAME
 } from "@/store/actions.const";
-import {CHANGE_STATUS, RESET_STATE} from "@/store/mutation.const";
+import {CHANGE_STATUS, INCREASE_GAME_SPEED, INCREASE_LEVEL, RESET_STATE} from "@/store/mutation.const";
 import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
@@ -18,7 +18,7 @@ import {
   GAME_STATUS,
   GET_CURRENT_COMPUTER_OBJECT,
   GET_CURRENT_USER_OBJECT,
-  GET_GAME_SPEED,
+  GET_GAME_SPEED, GET_LEVEL,
   GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
@@ -30,12 +30,7 @@ import TeeterTotterClass from "@/classes/TeeterTotter";
 Vue.use(Vuex)
 
 const newGame = () => ({
-  score: 0,
   level: 0,
-  power: {
-    user: 0,
-    computer: 0,
-  },
   objects: {
     user: [],
     computer: []
@@ -80,7 +75,10 @@ const getters: GetterTree<IState, IState> = {
   },
   [GET_TEETER_TOTTER](s) {
     return s.game.teeterTotter;
-  }
+  },
+   [GET_LEVEL](s) {
+    return s.game.level
+   }
 }
 
 const mutations: MutationTree<IState> = {
@@ -90,6 +88,12 @@ const mutations: MutationTree<IState> = {
   [RESET_STATE](s) {
     s.game = newGame();
   },
+  [INCREASE_GAME_SPEED](s) {
+    s.game.gameSpeed /= 1.5;
+  },
+  [INCREASE_LEVEL](s) {
+    s.game.level++
+  }
 };
 // TODO: Check IState second args
 const actions: ActionTree<IState, IState> = {
@@ -109,6 +113,7 @@ const actions: ActionTree<IState, IState> = {
   [END_GAME]({commit}) {
     commit(CHANGE_STATUS, GameStatus.END)
   },
+  // TODO: запихнуть в мутацию
   [ADD_GAME_OBJECT]({state, getters}, type: GameUser) {
     const gameObject = new GameObject({
       x: getRandomPosition(0, getters[FIELD_WIDTH] / 2), y: 0
@@ -118,6 +123,12 @@ const actions: ActionTree<IState, IState> = {
   },
   [SET_TEETER_TOTTER]({state}) {
     state.game.teeterTotter = new TeeterTotterClass();
+  },
+  [SET_NEXT_LEVEL]({commit, dispatch}) {
+    commit(INCREASE_LEVEL);
+    commit(INCREASE_GAME_SPEED);
+    dispatch(ADD_GAME_OBJECT, GameUser.USER);
+    dispatch(ADD_GAME_OBJECT, GameUser.COMPUTER);
   }
 };
 

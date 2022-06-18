@@ -37,13 +37,13 @@ import {
   FIELD_HEIGHT,
   FIELD_WIDTH,
   GAME_STATUS, GET_CURRENT_COMPUTER_OBJECT, GET_CURRENT_USER_OBJECT,
-  GET_GAME_SPEED, GET_TEETER_TOTTER,
+  GET_GAME_SPEED, GET_LEVEL, GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
 import TeeterTotterClass from "@/classes/TeeterTotter";
-import {CONTINUE_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {CONTINUE_GAME, END_GAME, PAUSE_GAME, SET_NEXT_LEVEL, START_GAME} from "@/store/actions.const";
 import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
 
 export enum Keyboard {
@@ -70,10 +70,13 @@ export default class Playground extends Vue {
   @Getter(GET_CURRENT_USER_OBJECT) private userObject !: GameObject;
   @Getter(GET_CURRENT_COMPUTER_OBJECT) private computerObject !: GameObject;
   @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
+  @Getter(GET_LEVEL) private gameLevel !: number;
 
   @Action(START_GAME) private startGame !: () => void;
   @Action(PAUSE_GAME) private pauseGame !: () => void;
+  @Action(END_GAME) private endGame !: () => void;
   @Action(CONTINUE_GAME) continueGame!: () => void;
+  @Action(SET_NEXT_LEVEL) setNextLevel!: () => void;
 
 
   private ticker: number|null = null;
@@ -145,7 +148,7 @@ export default class Playground extends Vue {
         this.userObject.yPos >= this.fieldHeight
         || this.computerObject.yPos >= this.fieldHeight
     ) {
-      // TODO: Упали на лестницу
+      // TODO: Упали на качелю
       const userShoulder = this.teeterTotter.getMomentShoulder(
           getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
       );
@@ -154,9 +157,14 @@ export default class Playground extends Vue {
       const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
       const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
       this.teeterTotter.setMomentum(userMomentum, computerMomentum)
-      console.log(this.teeterTotter.isContinueGame)
-      console.log(this.teeterTotter.rotateAngle)
-      this.onPauseGame()
+      // TODO: убрать 5 и все цифры в константы
+      if (this.gameLevel < 5 && this.teeterTotter.isContinueGame) {
+        this.setNextLevel()
+        this.onPauseGame();
+        this.onStartGame();
+      } else {
+        this.endGame();
+      }
     }
   }
 

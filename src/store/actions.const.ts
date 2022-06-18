@@ -4,3 +4,4 @@ export const CONTINUE_GAME = 'continueGame';
 export const END_GAME = 'endGame';
 export const ADD_GAME_OBJECT = 'addGameObject';
 export const SET_TEETER_TOTTER = 'setTeeterTotter';
+export const SET_NEXT_LEVEL = 'setNextLevel';
