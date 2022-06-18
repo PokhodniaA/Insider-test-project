@@ -5,6 +5,8 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {objectTypes} from "@/classes/GameObject";
+import {Getter} from "vuex-class";
+import {GET_GAME_SPEED} from "@/store/getters.const";
 
 @Component({
   components: {
@@ -18,16 +20,22 @@ export default class RandomObject extends Vue {
   @Prop({type: Number}) readonly width?: number;
   @Prop({type: Number}) readonly height?: number;
 
+  @Getter(GET_GAME_SPEED) private gameSpeed !: number;
+
   private get dimensions() {
-    return `width:${this.width}; height:${this.height};`
+    return `width:${this.width}; height:${this.height};`;
   }
 
   private get position() {
-    return `left: ${this.x}px; top: ${this.y}px;`
+    return `left: ${this.x}px; top: ${this.y}px;`;
+  }
+
+  private get transition() {
+    return `transition: ${this.gameSpeed / 1000}s;`;
   }
 
   private get objectStyles() {
-    return this.dimensions + this.position
+    return this.dimensions + this.position + this.transition;
   }
 
   private get objectClass() {

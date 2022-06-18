@@ -39,6 +39,7 @@ export default class TeeterTotter extends Vue {
     width: 100%;
     height: 10px;
     background-color: #CCC;
+    transition: transform .1s;
   }
 
   &__triangle {

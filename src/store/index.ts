@@ -36,7 +36,7 @@ const newGame = () => ({
     computer: []
   },
   teeterTotter: null,
-  gameSpeed: 1000
+  gameSpeed: 500
 });
 
 const state: IState = {
