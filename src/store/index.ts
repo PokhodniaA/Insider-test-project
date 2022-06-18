@@ -10,7 +10,7 @@ import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
   FIELD_WIDTH,
-  GAME_STATUS,
+  GAME_STATUS, GET_CURRENT_COMPUTER_OBJECT, GET_CURRENT_USER_OBJECT,
   GET_GAME_SPEED,
   USER_OBJECTS
 } from "@/store/getters.const";
@@ -60,6 +60,12 @@ const getters: GetterTree<IState, IState> = {
   },
   [GET_GAME_SPEED](s) {
     return s.game.gameSpeed
+  },
+  [GET_CURRENT_USER_OBJECT](s) {
+    return s.game.objects.user[s.game.objects.user.length - 1];
+  },
+  [GET_CURRENT_COMPUTER_OBJECT](s) {
+    return s.game.objects.computer[s.game.objects.computer.length - 1];
   }
 }
 

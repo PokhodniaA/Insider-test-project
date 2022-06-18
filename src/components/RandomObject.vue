@@ -1,5 +1,5 @@
 <template>
-  <div class="object" :class="objectClass" :style="position">{{weight}}</div>
+  <div class="object" :class="objectClass" :style="objectStyles">{{weight}}</div>
 </template>
 
 <script lang="ts">
@@ -15,9 +15,19 @@ export default class RandomObject extends Vue {
   @Prop({type: Number}) readonly y?: number;
   @Prop({type: Number}) readonly weight?: number;
   @Prop({type: String}) readonly type?: objectTypes;
+  @Prop({type: Number}) readonly width?: number;
+  @Prop({type: Number}) readonly height?: number;
+
+  private get dimensions() {
+    return `width:${this.width}; height:${this.height};`
+  }
 
   private get position() {
-    return `left: ${this.x}px; top: ${this.y}px`
+    return `left: ${this.x}px; top: ${this.y}px;`
+  }
+
+  private get objectStyles() {
+    return this.dimensions + this.position
   }
 
   private get objectClass() {

@@ -11,11 +11,18 @@ type Params = {
     y: number
 }
 
+type Sizes = {
+    width: number,
+    height: number
+}
+
 export default class GameObject {
+    // TODO: сделать вес и тип приватнфми и сделать геттеры
     public x!: number;
     public y!: number;
     public objectType!: objectTypes;
     public weight!: number
+    private sizes!: Sizes
 
     constructor(params: Params) {
         this.x = params.x;
@@ -30,6 +37,7 @@ export default class GameObject {
     private generateObject() {
         this.setRandomObject();
         this.setRandomWeight();
+        this.setSizes()
     }
 
     /**
@@ -57,5 +65,28 @@ export default class GameObject {
      */
     private setRandomWeight() {
         this.weight = getRandomNumber(1, 11);
+    }
+
+    private setSizes() {
+        this.sizes = {
+            width: 60,
+            height: 60
+        }
+    }
+
+    public get width() {
+        return this.sizes.width;
+    }
+
+    public get heigth() {
+        return this.sizes.height;
+    }
+
+    public set xPos(newX: number) {
+        this.x = newX;
+    }
+
+    public set yPos(newY: number) {
+        this.y = newY;
     }
 }

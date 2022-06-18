@@ -36,7 +36,7 @@ import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
   FIELD_WIDTH,
-  GAME_STATUS,
+  GAME_STATUS, GET_CURRENT_COMPUTER_OBJECT, GET_CURRENT_USER_OBJECT,
   GET_GAME_SPEED,
   USER_OBJECTS
 } from "@/store/getters.const";
@@ -57,6 +57,8 @@ export default class Playground extends Vue {
   @Getter(FIELD_HEIGHT) private fieldHeight !: number;
   @Getter(FIELD_WIDTH) private fieldWidth !: number;
   @Getter(GET_GAME_SPEED) private gameSpeed !: number;
+  @Getter(GET_CURRENT_USER_OBJECT) private userObject !: GameObject;
+  @Getter(GET_CURRENT_COMPUTER_OBJECT) private computerObject !: GameObject;
 
   private ticker: number|null = null;
 
@@ -73,7 +75,15 @@ export default class Playground extends Vue {
   }
 
   private onTick() {
-    console.log('tick')
+    this.userObject.yPos = this.userObject.y + this.fieldHeight / 10
+    this.computerObject.yPos = this.computerObject.y + this.fieldHeight / 10
+
+    if (
+        this.userObject.y + this.userObject.heigth >= this.fieldHeight
+        || this.computerObject.y + this.userObject.heigth >= this.fieldHeight
+    ) {
+      this.endGame()
+    }
   }
 
   private startGame() {
