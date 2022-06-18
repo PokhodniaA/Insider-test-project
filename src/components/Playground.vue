@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator";
-import {Getter} from 'vuex-class'
+import {Action, Getter} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
 import {
@@ -42,6 +42,14 @@ import {
 } from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
+import {PAUSE_GAME, START_GAME} from "@/store/actions.const";
+
+export enum Keyboard {
+  ENTER = 'Enter',
+  ESC = 'Escape',
+  LEFT = 'ArrowLeft',
+  RIGHT = 'ArrowRight',
+}
 
 @Component({
   components: {
@@ -60,6 +68,10 @@ export default class Playground extends Vue {
   @Getter(GET_CURRENT_USER_OBJECT) private userObject !: GameObject;
   @Getter(GET_CURRENT_COMPUTER_OBJECT) private computerObject !: GameObject;
 
+  @Action(START_GAME) private startGame !: () => void;
+  @Action(PAUSE_GAME) private pauseGame !: () => void;
+
+
   private ticker: number|null = null;
 
   private get gameAreaStyles() {
@@ -74,6 +86,47 @@ export default class Playground extends Vue {
     `;
   }
 
+  public mounted() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  public beforeDestroy() {
+    document.removeEventListener('keydown', this.onKeyDown)
+  }
+
+  private onKeyDown(event: KeyboardEvent) {
+    switch (event.code) {
+      case Keyboard.ENTER:
+        if (this.gameStatus === GameStatus.PLAY) {
+          return;
+        }
+
+        this.startGame();
+        break;
+      case Keyboard.ESC:
+        if (this.gameStatus === GameStatus.PAUSE) {
+          return;
+        }
+
+        this.pauseGame();
+        break;
+      case Keyboard.LEFT:
+        if (this.gameStatus !== GameStatus.PLAY) {
+          return;
+        }
+
+        this.userObject.xPos = this.userObject.x - this.userObject.width / 2
+        break;
+      case Keyboard.RIGHT:
+        if (this.gameStatus !== GameStatus.PLAY) {
+          return;
+        }
+
+        this.userObject.xPos = this.userObject.x + this.userObject.width / 2
+        break;
+    }
+  }
+
   private onTick() {
     this.userObject.yPos = this.userObject.y + this.fieldHeight / 10
     this.computerObject.yPos = this.computerObject.y + this.fieldHeight / 10
@@ -82,15 +135,15 @@ export default class Playground extends Vue {
         this.userObject.y + this.userObject.heigth >= this.fieldHeight
         || this.computerObject.y + this.userObject.heigth >= this.fieldHeight
     ) {
-      this.endGame()
+      this.onEndGame()
     }
   }
 
-  private startGame() {
+  private onStartGame() {
     this.ticker = setInterval(this.onTick, this.gameSpeed)
   }
 
-  private endGame() {
+  private onEndGame() {
     if (this.ticker === null) {
       return;
     }
@@ -103,10 +156,10 @@ export default class Playground extends Vue {
   private changeStatus() {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        this.endGame();
+        this.onEndGame();
         break;
       case GameStatus.PLAY:
-        this.startGame();
+        this.onStartGame();
         break;
     }
   }

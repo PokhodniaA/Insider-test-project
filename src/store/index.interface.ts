@@ -1,4 +1,4 @@
-import GameObject from "@/helpers/GameObject";
+import GameObject from "@/classes/GameObject";
 
 export interface IState {
     gameStatus: GameStatus,

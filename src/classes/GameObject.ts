@@ -1,4 +1,6 @@
 import {getRandomNumber} from "@/utils/numbers.utils";
+import store from "@/store";
+import {FIELD_WIDTH} from "@/store/getters.const";
 
 export enum objectTypes {
     CIRCLE = 'circle',
@@ -25,9 +27,10 @@ export default class GameObject {
     private sizes!: Sizes
 
     constructor(params: Params) {
-        this.x = params.x;
-        this.y = params.y;
         this.generateObject()
+
+        this.xPos = params.x;
+        this.yPos = params.y;
     }
 
     /**
@@ -83,7 +86,14 @@ export default class GameObject {
     }
 
     public set xPos(newX: number) {
-        this.x = newX;
+        let x = newX;
+        if (newX <= 0) {
+            x = 0;
+        } else if (newX + this.width >= store.getters[FIELD_WIDTH] / 2) {
+            x = store.getters[FIELD_WIDTH] / 2 - this.width;
+        }
+
+        this.x = x;
     }
 
     public set yPos(newY: number) {
