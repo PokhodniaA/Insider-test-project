@@ -42,7 +42,7 @@ import {
 } from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
-import {PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {CONTINUE_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
 
 export enum Keyboard {
   ENTER = 'Enter',
@@ -70,6 +70,7 @@ export default class Playground extends Vue {
 
   @Action(START_GAME) private startGame !: () => void;
   @Action(PAUSE_GAME) private pauseGame !: () => void;
+  @Action(CONTINUE_GAME) continueGame!: () => void;
 
 
   private ticker: number|null = null;
@@ -98,6 +99,11 @@ export default class Playground extends Vue {
     switch (event.code) {
       case Keyboard.ENTER:
         if (this.gameStatus === GameStatus.PLAY) {
+          return;
+        }
+
+        if (this.gameStatus === GameStatus.PAUSE) {
+          this.continueGame();
           return;
         }
 
@@ -135,7 +141,7 @@ export default class Playground extends Vue {
         this.userObject.y + this.userObject.heigth >= this.fieldHeight
         || this.computerObject.y + this.userObject.heigth >= this.fieldHeight
     ) {
-      this.onEndGame()
+      this.onPauseGame()
     }
   }
 
@@ -143,7 +149,7 @@ export default class Playground extends Vue {
     this.ticker = setInterval(this.onTick, this.gameSpeed)
   }
 
-  private onEndGame() {
+  private onPauseGame() {
     if (this.ticker === null) {
       return;
     }
@@ -156,7 +162,8 @@ export default class Playground extends Vue {
   private changeStatus() {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        this.onEndGame();
+      case GameStatus.END:
+        this.onPauseGame();
         break;
       case GameStatus.PLAY:
         this.onStartGame();

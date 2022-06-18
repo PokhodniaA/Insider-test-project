@@ -4,7 +4,7 @@ import { ActionTree } from 'vuex';
 import { MutationTree } from 'vuex';
 
 import {GameStatus, IState, GameUser} from "./index.interface";
-import {ADD_GAME_OBJECT, PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {ADD_GAME_OBJECT, CONTINUE_GAME, END_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
 import {CHANGE_STATUS, RESET_STATE} from "@/store/mutation.const";
 import {
   COMPUTER_OBJECTS,
@@ -34,7 +34,7 @@ const newGame = () => ({
 });
 
 const state: IState = {
-  gameStatus: GameStatus.PAUSE,
+  gameStatus: GameStatus.END,
   game: newGame(),
   field: {
     width: 600,
@@ -87,6 +87,12 @@ const actions: ActionTree<IState, IState> = {
   },
   [PAUSE_GAME]({commit}) {
     commit(CHANGE_STATUS, GameStatus.PAUSE);
+  },
+  [CONTINUE_GAME]({commit}) {
+    commit(CHANGE_STATUS, GameStatus.PLAY)
+  },
+  [END_GAME]({commit}) {
+    commit(CHANGE_STATUS, GameStatus.END)
   },
   [ADD_GAME_OBJECT]({state, getters}, type: GameUser) {
     console.log(getters[FIELD_WIDTH])

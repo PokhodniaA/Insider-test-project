@@ -25,7 +25,8 @@ export interface IGameState {
 
 export enum GameStatus {
     PAUSE = 'pause',
-    PLAY = 'play'
+    PLAY = 'play',
+    END = 'end',
 }
 
 export enum GameUser {

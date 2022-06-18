@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import {Action, Getter} from "vuex-class";
-import {PAUSE_GAME, START_GAME} from "@/store/actions.const";
+import {CONTINUE_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
 import {GAME_STATUS} from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
 
@@ -19,6 +19,7 @@ export default class Header extends Vue {
 
   @Action(START_GAME) startNewGame!: () => void;
   @Action(PAUSE_GAME) pauseGame!: () => void;
+  @Action(CONTINUE_GAME) continueGame!: () => void;
 
   private get title() {
     switch (this.gameStatus) {
@@ -34,8 +35,11 @@ export default class Header extends Vue {
   private toggleGameStatus() {
     // TODO: Change toggle on play
     switch (this.gameStatus) {
-      case GameStatus.PAUSE:
+      case GameStatus.END:
         this.startNewGame();
+        break;
+      case GameStatus.PAUSE:
+        this.continueGame();
         break;
       case GameStatus.PLAY:
         this.pauseGame();
