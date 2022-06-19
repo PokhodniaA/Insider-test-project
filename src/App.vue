@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <game-header />
+    <game-controls />
     <game-playground />
     <game-fade />
   </div>
@@ -10,13 +11,15 @@
 import {Component, Vue} from 'vue-property-decorator';
 import GameHeader from '@/components/GameHeader.vue';
 import GamePlayground from '@/components/GamePlayground.vue';
-import GameFade from "@/components/GameFade.vue";
+import GameFade from '@/components/GameFade.vue';
+import GameControls from '@/components/GameControls.vue';
 
 @Component({
   components: {
     GameHeader,
     GamePlayground,
-    GameFade
+    GameFade,
+    GameControls
   }
 })
 export default class App extends Vue {
