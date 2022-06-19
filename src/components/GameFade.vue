@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      v-show="showModal"
+      v-show="showFade"
       class="game-fade__background"
     >
       <h1>{{ title }}</h1>
@@ -26,7 +26,11 @@ import {GameStatus} from "@/types/enums";
 export default class GameFade extends Vue {
   @Getter(GAME_STATUS) private gameStatus !: GameStatus;
 
-  private get showModal(): boolean {
+  /**
+   * Is need to show fade screen
+   * @private
+   */
+  private get showFade(): boolean {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
       case GameStatus.END:
@@ -39,6 +43,10 @@ export default class GameFade extends Vue {
     }
   }
 
+  /**
+   * Get fade screen title
+   * @private
+   */
   private get title(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
@@ -50,6 +58,10 @@ export default class GameFade extends Vue {
     }
   }
 
+  /**
+   * Get fade screen subtitle
+   * @private
+   */
   private get subTitle(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
