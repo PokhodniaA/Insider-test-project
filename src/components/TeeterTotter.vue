@@ -1,7 +1,7 @@
 <template>
   <div class="teeter">
     <div
-      :style="angleStyle"
+      :style="teeterTotterStyles"
       class="teeter__hr"
     />
     <div class="teeter__triangle" />
@@ -29,6 +29,26 @@ export default class TeeterTotter extends Vue {
     return `transform: rotate(${this.teeterTotter.rotateAngle}deg);`;
   }
 
+  /**
+   * Get teeter totter height style
+   * @private
+   */
+  private get teeterTotterHeight(): string {
+    if (!this.teeterTotter) {
+      return '';
+    }
+
+    return `height: ${this.teeterTotter.heightInPx}px;`
+  }
+
+  /**
+   * Get teeter totter computed styles
+   * @private
+   */
+  private get teeterTotterStyles(): string {
+    return this.teeterTotterHeight + this.angleStyle;
+  }
+
 }
 </script>
 
@@ -44,7 +64,6 @@ export default class TeeterTotter extends Vue {
 
   &__hr {
     width: 100%;
-    height: 10px;
     background-color: $teeter-bg;
     transition: transform .1s;
   }

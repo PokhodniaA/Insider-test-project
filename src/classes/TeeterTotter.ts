@@ -5,7 +5,7 @@ import {
   MAX_ROTATE_ANGLE,
   HUNDRED_PERCENT_DEGREE,
   MAX_MOMENTUM,
-  MAX_BENDING_PERCENT
+  MAX_BENDING_PERCENT, TEETER_TOTTER_HEIGHT_PX
 } from '@/utils/constants';
 
 export default class TeeterTotterClass {
@@ -14,6 +14,7 @@ export default class TeeterTotterClass {
   private momentum = 0;
 
   public rotateAngle = 0;
+  public heightInPx = TEETER_TOTTER_HEIGHT_PX
 
   /**
    * Get teeter totter bending in percent
