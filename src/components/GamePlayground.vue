@@ -9,6 +9,8 @@
             :y="user.y"
             :type="user.objectType"
             :weight="user.weight"
+            :width="user.width"
+            :height="user.heigth"
         />
       </div>
       <div class="playground__field">
@@ -19,6 +21,8 @@
             :y="ai.y"
             :type="ai.objectType"
             :weight="ai.weight"
+            :width="ai.width"
+            :height="ai.heigth"
         />
       </div>
     </div>
@@ -46,6 +50,7 @@ import TeeterTotterClass from "@/classes/TeeterTotter";
 import {CONTINUE_GAME, END_GAME, PAUSE_GAME, SET_NEXT_LEVEL, START_GAME} from "@/store/actions.const";
 import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
 import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
+import {MAX_LEVEL_CONST, MOVE_PIXELS_PER_TICK} from "@/utils/constants";
 
 export enum Keyboard {
   ENTER = 'Enter',
@@ -80,7 +85,6 @@ export default class Playground extends Vue {
   @Action(SET_NEXT_LEVEL) setNextLevel!: () => void;
 
   @Mutation(UPDATE_TOTAL_WEIGHT) updateTotalWeight!: (data: UpdateTotalWeight) => void;
-
 
   private ticker: number|null = null;
 
@@ -144,14 +148,14 @@ export default class Playground extends Vue {
 
   private onTick() {
     // TODO: поставить проверку в начале
-    this.userObject.yPos = this.userObject.y + 2
-    this.computerObject.yPos = this.computerObject.y + 2
+    this.userObject.yPos = this.userObject.y + MOVE_PIXELS_PER_TICK
+    this.computerObject.yPos = this.computerObject.y + MOVE_PIXELS_PER_TICK
 
     if (
         this.userObject.yPos >= this.fieldHeight
         || this.computerObject.yPos >= this.fieldHeight
     ) {
-      // TODO: Упали на качелю
+      // TODO: вынести в отдельные ф-ии
       this.updateTotalWeight({type: GameUser.USER, weight: this.userObject.weight})
       this.updateTotalWeight({type: GameUser.COMPUTER, weight: this.computerObject.weight})
 
@@ -163,8 +167,8 @@ export default class Playground extends Vue {
       const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
       const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
       this.teeterTotter.setMomentum(userMomentum, computerMomentum)
-      // TODO: убрать 5 и все цифры в константы
-      if (this.gameLevel < 5 && this.teeterTotter.isContinueGame) {
+
+      if (this.gameLevel < MAX_LEVEL_CONST && this.teeterTotter.isContinueGame) {
         this.setNextLevel()
         this.onPauseGame();
         this.onStartGame();

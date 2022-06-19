@@ -31,6 +31,8 @@ import {
 import GameObject from "@/classes/GameObject";
 import {getRandomPosition} from "@/utils/calculates.utils";
 import TeeterTotterClass from "@/classes/TeeterTotter";
+import {GAME_SPEED_CONST, FIELD_WIDTH_CONST, FIELD_HEIGHT_CONST, GAME_SPEED_INCREMENT_CONST} from "@/utils/constants";
+
 
 
 Vue.use(Vuex)
@@ -46,15 +48,15 @@ const newGame = () => ({
     computer: []
   },
   teeterTotter: null,
-  gameSpeed: 1000 / 60
+  gameSpeed: GAME_SPEED_CONST
 });
 
 const state: IState = {
   gameStatus: GameStatus.NEW,
   game: newGame(),
   field: {
-    width: 600,
-    height: 600
+    width: FIELD_WIDTH_CONST,
+    height: FIELD_HEIGHT_CONST
   },
 };
 
@@ -102,7 +104,7 @@ const mutations: MutationTree<IState> = {
     s.game = newGame();
   },
   [INCREASE_GAME_SPEED](s) {
-    s.game.gameSpeed /= 1.3;
+    s.game.gameSpeed /= GAME_SPEED_INCREMENT_CONST;
   },
   [INCREASE_LEVEL](s) {
     s.game.level++
@@ -111,7 +113,7 @@ const mutations: MutationTree<IState> = {
     s.game.totalWeight[type] += weight;
   }
 };
-// TODO: Check IState second args
+
 const actions: ActionTree<IState, IState> = {
   [START_GAME]({ commit, dispatch }) {
     commit(RESET_STATE);

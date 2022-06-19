@@ -12,17 +12,12 @@ import {Component, Vue} from "vue-property-decorator";
 import {Getter} from "vuex-class";
 import {GAME_STATUS} from "@/store/getters.const";
 import {GameStatus} from "@/store/index.interface";
-
-// TODO: перенести enum в отдельный файл
-export enum FadeTitle {
-  PAUSE = 'Pause',
-  END = 'Game Over'
-}
-
-export enum FadeSubtitle {
-  CONTINUE = 'Press "Enter" for continue game',
-  NEW = 'Press "Enter" for start new game'
-}
+import {
+  CONTINUE_SUBTITLE_MESSAGE,
+  END_MESSAGE,
+  NEW_SUBTITLE_MESSAGE,
+  PAUSE_MESSAGE
+} from "@/utils/constants";
 
 @Component({})
 export default class GameFade extends Vue {
@@ -44,9 +39,9 @@ export default class GameFade extends Vue {
   private get title(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        return FadeTitle.PAUSE
+        return PAUSE_MESSAGE
       case GameStatus.END:
-        return FadeTitle.END
+        return END_MESSAGE
       default:
         return '';
     }
@@ -55,9 +50,9 @@ export default class GameFade extends Vue {
   private get subTitle(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        return FadeSubtitle.CONTINUE
+        return CONTINUE_SUBTITLE_MESSAGE
       case GameStatus.END:
-        return FadeSubtitle.NEW
+        return NEW_SUBTITLE_MESSAGE
       default:
         return '';
     }

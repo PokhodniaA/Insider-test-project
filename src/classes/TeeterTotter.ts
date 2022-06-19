@@ -1,8 +1,13 @@
 import store from "@/store";
 import {FIELD_WIDTH} from "@/store/getters.const";
+import {
+    TEETER_TOTTER_WIDTH,
+    MAX_ROTATE_ANGLE,
+    HUNDRED_PERCENT_DEGREE,
+    MAX_MOMENTUM,
+    MAX_BENDING_PERCENT
+} from '@/utils/constants'
 
-const TEETER_TOTTER_WIDTH = 10;
-const MAX_ROTATE_ANGLE = 14;
 
 export default class TeeterTotterClass {
     private teeterTotterWidth: number = TEETER_TOTTER_WIDTH;
@@ -12,18 +17,18 @@ export default class TeeterTotterClass {
     public rotateAngle = 0;
 
     public get bendingPercentage(): number {
-        return Math.round((this.rotateAngle * 100) / 45);
+        return Math.round((this.rotateAngle * 100) / HUNDRED_PERCENT_DEGREE);
     }
 
     public get isContinueGame(): boolean {
-        return this.momentum < 20 || this.bendingPercentage < 30
+        return this.momentum < MAX_MOMENTUM || this.bendingPercentage < MAX_BENDING_PERCENT
     }
 
     public updateRotateAngle() {
         if (this.momentum === 0) {
             return 0;
         }
-        this.rotateAngle = Math.round((this.maxRotateAngle * this.momentum) / 20);
+        this.rotateAngle = Math.round((this.maxRotateAngle * this.momentum) / MAX_MOMENTUM);
     }
 
     public getMomentShoulder(pos: number): number {
@@ -32,14 +37,11 @@ export default class TeeterTotterClass {
     }
 
     public setMomentum(leftSide: number, rightSide: number) {
-        console.log(leftSide, 'left-momentum')
-        console.log(rightSide, 'right-momentum')
         if (leftSide > rightSide) {
             this.momentum += rightSide - leftSide;
         } else {
             this.momentum -= leftSide - rightSide;
         }
-        console.log(this.momentum, 'setted momentum')
 
         this.updateRotateAngle()
     }

@@ -1,8 +1,9 @@
 import {getRandomNumber} from "@/utils/calculates.utils";
 import store from "@/store";
 import {FIELD_WIDTH} from "@/store/getters.const";
-
-export enum objectTypes {
+import {MAX_OBJECT_WEIGHT, MIN_OBJECT_WEIGHT, OBJECT_SIZE_CONST} from "@/utils/constants";
+// TODO: перенести типы в отдельный файл
+export enum ObjectTypes {
     CIRCLE = 'circle',
     TRIANGLE = 'triangle',
     RECTANGLE = 'rectangle',
@@ -22,7 +23,7 @@ export default class GameObject {
     // TODO: сделать вес и тип приватнфми и сделать геттеры
     public x!: number;
     public y!: number;
-    public objectType!: objectTypes;
+    public objectType!: ObjectTypes;
     public weight!: number
     private sizes!: Sizes
 
@@ -51,13 +52,13 @@ export default class GameObject {
         const type = getRandomNumber(1, 4);
         switch (type) {
             case 1:
-                this.objectType = objectTypes.CIRCLE;
+                this.objectType = ObjectTypes.CIRCLE;
                 break;
             case 2:
-                this.objectType = objectTypes.TRIANGLE;
+                this.objectType = ObjectTypes.TRIANGLE;
                 break;
             case 3:
-                this.objectType = objectTypes.RECTANGLE;
+                this.objectType = ObjectTypes.RECTANGLE;
                 break;
         }
     }
@@ -67,13 +68,13 @@ export default class GameObject {
      * @private
      */
     private setRandomWeight() {
-        this.weight = getRandomNumber(1, 11);
+        this.weight = getRandomNumber(MIN_OBJECT_WEIGHT, MAX_OBJECT_WEIGHT);
     }
 
     private setSizes() {
         this.sizes = {
-            width: 60,
-            height: 60
+            width: OBJECT_SIZE_CONST,
+            height: OBJECT_SIZE_CONST
         }
     }
 

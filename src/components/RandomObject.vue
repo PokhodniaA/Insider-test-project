@@ -4,22 +4,19 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {objectTypes} from "@/classes/GameObject";
+import {ObjectTypes} from "@/classes/GameObject";
 
-@Component({
-  components: {
-  },
-})
+@Component({})
 export default class RandomObject extends Vue {
   @Prop({type: Number}) readonly x?: number;
   @Prop({type: Number}) readonly y?: number;
   @Prop({type: Number}) readonly weight?: number;
-  @Prop({type: String}) readonly type?: objectTypes;
+  @Prop({type: String}) readonly type?: ObjectTypes;
   @Prop({type: Number}) readonly width?: number;
   @Prop({type: Number}) readonly height?: number;
 
   private get dimensions() {
-    return `width:${this.width}; height:${this.height};`;
+    return `width:${this.width}px; height:${this.height}px;`;
   }
 
   private get position() {
@@ -44,9 +41,6 @@ export default class RandomObject extends Vue {
 @import "@/scss/_variables.scss";
 
 .object {
-  // TODO: Calculate width and height
-  width: 60px;
-  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
