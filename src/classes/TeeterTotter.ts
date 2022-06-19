@@ -8,7 +8,6 @@ import {
     MAX_BENDING_PERCENT
 } from '@/utils/constants'
 
-
 export default class TeeterTotterClass {
     private teeterTotterWidth: number = TEETER_TOTTER_WIDTH;
     private maxRotateAngle: number = MAX_ROTATE_ANGLE;
@@ -45,5 +44,4 @@ export default class TeeterTotterClass {
 
         this.updateRotateAngle()
     }
-
 }

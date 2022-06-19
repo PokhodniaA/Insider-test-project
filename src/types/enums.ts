@@ -15,3 +15,10 @@ export enum ObjectTypes {
     TRIANGLE = 'triangle',
     RECTANGLE = 'rectangle',
 }
+
+export enum Keyboard {
+    ENTER = 'Enter',
+    ESC = 'Escape',
+    LEFT = 'ArrowLeft',
+    RIGHT = 'ArrowRight',
+}

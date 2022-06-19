@@ -40,8 +40,12 @@ import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
   FIELD_WIDTH,
-  GAME_STATUS, GET_CURRENT_COMPUTER_OBJECT, GET_CURRENT_USER_OBJECT,
-  GET_GAME_SPEED, GET_LEVEL, GET_TEETER_TOTTER,
+  GAME_STATUS,
+  GET_CURRENT_COMPUTER_OBJECT,
+  GET_CURRENT_USER_OBJECT,
+  GET_GAME_SPEED,
+  GET_LEVEL,
+  GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
 import GameObject from "@/classes/GameObject";
@@ -51,14 +55,7 @@ import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
 import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
 import {MAX_LEVEL_CONST, MOVE_PIXELS_PER_TICK} from "@/utils/constants";
 import {UpdateTotalWeight} from "@/types/types";
-import {GameStatus, GameUser} from "@/types/enums";
-
-export enum Keyboard {
-  ENTER = 'Enter',
-  ESC = 'Escape',
-  LEFT = 'ArrowLeft',
-  RIGHT = 'ArrowRight',
-}
+import {GameStatus, GameUser, Keyboard} from "@/types/enums";
 
 @Component({
   components: {
