@@ -10,6 +10,11 @@ export enum GameUser {
   COMPUTER = 'computer'
 }
 
+export enum Sides {
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+
 export enum ObjectTypes {
   CIRCLE = 'circle',
   TRIANGLE = 'triangle',

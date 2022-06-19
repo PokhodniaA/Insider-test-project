@@ -11,6 +11,7 @@ export const FIELD_WIDTH_CONST = 600;
 
 export const TEETER_TOTTER_WIDTH = 10;
 export const MAX_ROTATE_ANGLE = 14;
+export const TEETER_TOTTER_HEIGHT_PX = 10;
 
 export const HUNDRED_PERCENT_DEGREE = 45;
 export const MAX_MOMENTUM = 20;

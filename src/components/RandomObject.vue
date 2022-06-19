@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {ObjectTypes} from "@/types/enums";
+import {ObjectTypes, Sides} from "@/types/enums";
 import {Getter} from 'vuex-class';
 import {FIELD_WIDTH, GET_TEETER_TOTTER} from '@/store/getters.const';
 import TeeterTotterClass from '@/classes/TeeterTotter';
@@ -19,6 +19,7 @@ import GameObject from '@/classes/GameObject';
 @Component({})
 export default class RandomObject extends Vue {
   @Prop({type: Object}) readonly object!: GameObject;
+  @Prop({type: String}) readonly side!: Sides;
   @Prop({type: Boolean}) readonly isCurrent!: boolean;
 
   @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
@@ -40,14 +41,30 @@ export default class RandomObject extends Vue {
     return `left: ${this.object.x}px; top: ${this.object.y}px;`;
   }
 
+  /**
+   * Get object rotation depends on rotation Teeter Totter
+   * @private
+   */
   private get rotation(): string {
     if (this.isCurrent) {
       return '';
     }
+    const angle = this.teeterTotter.rotateAngle;
+
+    let transformOriginX, transformOriginY;
+
+    if (this.side === Sides.LEFT) {
+      transformOriginX = (this.fieldWidth / 2) - this.object.x;
+      transformOriginY = this.object.height + this.teeterTotter.heightInPx / 2;
+    } else {
+      transformOriginX = -this.object.x;
+      transformOriginY = this.object.height + this.teeterTotter.heightInPx / 2;
+    }
+
 
     return `
-      transform: rotate(${this.teeterTotter.rotateAngle}deg);
-      transform-origin: ${(this.fieldWidth / 2) - this.object.xPos}px;
+      transform: rotate(${angle}deg);
+      transform-origin: ${transformOriginX}px ${transformOriginY}px;
     `;
   }
 

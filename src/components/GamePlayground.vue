@@ -12,6 +12,7 @@
           v-for="(user, idx) in users"
           :key="idx + 'user'"
           :object="user"
+          :side="sides.LEFT"
           :is-current="users.length - 1 === idx"
         />
       </div>
@@ -20,6 +21,7 @@
           v-for="(ai, idx) in computers"
           :key="idx + 'comp'"
           :object="ai"
+          :side="sides.RIGHT"
           :is-current="computers.length - 1 === idx"
         />
       </div>
@@ -53,7 +55,7 @@ import {getMomentum} from "@/utils/calculates.utils";
 import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
 import {MAX_LEVEL_CONST, MOVE_PIXELS_PER_TICK} from "@/utils/constants";
 import {UpdateTotalWeight} from "@/types/types";
-import {GameStatus, GameUser, Keyboard} from "@/types/enums";
+import {GameStatus, GameUser, Keyboard, Sides} from "@/types/enums";
 
 @Component({
   components: {
@@ -83,6 +85,7 @@ export default class Playground extends Vue {
   @Mutation(UPDATE_TOTAL_WEIGHT) updateTotalWeight!: (data: UpdateTotalWeight) => void;
 
   private ticker: number | null = null;
+  private sides = Sides;
 
   private get gameAreaStyles() {
     return `height: ${this.fieldHeight}px;`;
@@ -90,9 +93,9 @@ export default class Playground extends Vue {
 
   private get containerStyles() {
     return `
-    width:${this.fieldWidth}px;
-    min-width:${this.fieldWidth}px;
-    max-width:${this.fieldWidth}px;
+      width:${this.fieldWidth}px;
+      min-width:${this.fieldWidth}px;
+      max-width:${this.fieldWidth}px;
     `;
   }
 
