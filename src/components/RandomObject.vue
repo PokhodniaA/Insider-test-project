@@ -4,29 +4,32 @@
     :class="objectClass"
     :style="objectStyles"
   >
-    {{ weight }}
+    {{ object.weight }}
   </div>
 </template>
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {ObjectTypes} from "@/types/enums";
+import {Getter} from 'vuex-class';
+import {FIELD_WIDTH, GET_TEETER_TOTTER} from '@/store/getters.const';
+import TeeterTotterClass from '@/classes/TeeterTotter';
+import GameObject from '@/classes/GameObject';
 
 @Component({})
 export default class RandomObject extends Vue {
-  @Prop({type: Number}) readonly x!: number;
-  @Prop({type: Number}) readonly y!: number;
-  @Prop({type: Number}) readonly weight!: number;
-  @Prop({type: String}) readonly type!: ObjectTypes;
-  @Prop({type: Number}) readonly width!: number;
-  @Prop({type: Number}) readonly height!: number;
+  @Prop({type: Object}) readonly object!: GameObject;
+  @Prop({type: Boolean}) readonly isCurrent!: boolean;
+
+  @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
+  @Getter(FIELD_WIDTH) private fieldWidth !: number;
 
   /**
    * Get object dimension styles
    * @private
    */
   private get dimensions(): string {
-    return `width:${this.width}px; height:${this.height}px;`;
+    return `width:${this.object.width}px; height:${this.object.height}px;`;
   }
 
   /**
@@ -34,7 +37,18 @@ export default class RandomObject extends Vue {
    * @private
    */
   private get position(): string {
-    return `left: ${this.x}px; top: ${this.y}px;`;
+    return `left: ${this.object.x}px; top: ${this.object.y}px;`;
+  }
+
+  private get rotation(): string {
+    if (this.isCurrent) {
+      return '';
+    }
+
+    return `
+      transform: rotate(${this.teeterTotter.rotateAngle}deg);
+      transform-origin: ${(this.fieldWidth / 2) - this.object.xPos}px;
+    `;
   }
 
   /**
@@ -42,15 +56,15 @@ export default class RandomObject extends Vue {
    * @private
    */
   private get objectStyles(): string {
-    return this.dimensions + this.position;
+    return this.dimensions + this.position + this.rotation;
   }
 
   /**
    * Get object type class
    * @private
    */
-  private get objectClass(): string {
-    return this.type;
+  private get objectClass(): ObjectTypes {
+    return this.object.objectType;
   }
 }
 </script>

@@ -11,24 +11,16 @@
         <random-object
           v-for="(user, idx) in users"
           :key="idx + 'user'"
-          :x="user.x"
-          :y="user.y"
-          :type="user.objectType"
-          :weight="user.weight"
-          :width="user.width"
-          :height="user.height"
+          :object="user"
+          :is-current="users.length - 1 === idx"
         />
       </div>
       <div class="playground__field">
         <random-object
           v-for="(ai, idx) in computers"
           :key="idx + 'comp'"
-          :x="ai.x"
-          :y="ai.y"
-          :type="ai.objectType"
-          :weight="ai.weight"
-          :width="ai.width"
-          :height="ai.height"
+          :object="ai"
+          :is-current="computers.length - 1 === idx"
         />
       </div>
     </div>
@@ -57,7 +49,7 @@ import {
 import GameObject from "@/classes/GameObject";
 import TeeterTotterClass from "@/classes/TeeterTotter";
 import {CONTINUE_GAME, END_GAME, PAUSE_GAME, SET_NEXT_LEVEL, START_GAME} from "@/store/actions.const";
-import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
+import {getMomentum} from "@/utils/calculates.utils";
 import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
 import {MAX_LEVEL_CONST, MOVE_PIXELS_PER_TICK} from "@/utils/constants";
 import {UpdateTotalWeight} from "@/types/types";
@@ -174,10 +166,11 @@ export default class Playground extends Vue {
   }
 
   private setMomentum() {
-    const userArm = this.teeterTotter.getMomentArm(
-      getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
-    );
-    const computerArm = this.teeterTotter.getMomentArm(this.computerObject.xPos);
+    const userPositionFromCenter = (this.fieldWidth / 2) - this.userObject.xPos;
+    const computerPositionFromCenter = this.computerObject.xPos;
+
+    const userArm = this.teeterTotter.getMomentArm(userPositionFromCenter);
+    const computerArm = this.teeterTotter.getMomentArm(computerPositionFromCenter);
 
     const userMomentum = Math.round(getMomentum(userArm, this.userObject.weight));
     const computerMomentum = Math.round(getMomentum(computerArm, this.computerObject.weight));
