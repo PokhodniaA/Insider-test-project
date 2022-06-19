@@ -9,3 +9,9 @@ export enum GameUser {
     USER = 'user',
     COMPUTER = 'computer'
 }
+
+export enum ObjectTypes {
+    CIRCLE = 'circle',
+    TRIANGLE = 'triangle',
+    RECTANGLE = 'rectangle',
+}

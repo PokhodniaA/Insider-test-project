@@ -2,22 +2,8 @@ import {getRandomNumber} from "@/utils/calculates.utils";
 import store from "@/store";
 import {FIELD_WIDTH} from "@/store/getters.const";
 import {MAX_OBJECT_WEIGHT, MIN_OBJECT_WEIGHT, OBJECT_SIZE_CONST} from "@/utils/constants";
-// TODO: перенести типы в отдельный файл
-export enum ObjectTypes {
-    CIRCLE = 'circle',
-    TRIANGLE = 'triangle',
-    RECTANGLE = 'rectangle',
-}
-
-type Params = {
-    x: number,
-    y: number
-}
-
-type Sizes = {
-    width: number,
-    height: number
-}
+import {ObjectTypes} from "@/types/enums";
+import {Params, Sizes} from "@/types/types";
 
 export default class GameObject {
     // TODO: сделать вес и тип приватнфми и сделать геттеры

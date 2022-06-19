@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {ObjectTypes} from "@/classes/GameObject";
+import {ObjectTypes} from "@/types/enums";
 
 @Component({})
 export default class RandomObject extends Vue {
