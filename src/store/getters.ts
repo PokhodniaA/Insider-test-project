@@ -8,40 +8,97 @@ import {
   GET_GAME_SPEED, GET_LEVEL, GET_TEETER_TOTTER, GET_TOTAL_WEIGHT,
   USER_OBJECTS
 } from "@/store/getters.const";
-import {GameUser} from "@/types/enums";
+import {GameStatus, GameUser} from "@/types/enums";
+import GameObject from '@/classes/GameObject';
+import TeeterTotterClass from '@/classes/TeeterTotter';
+import {TotalWeight} from '@/types/types';
 
 const getters: GetterTree<IState, IState> = {
-  [GAME_STATUS](s) {
+  /**
+   * Get game status
+   * @param s
+   */
+  [GAME_STATUS](s): GameStatus {
     return s.gameStatus;
   },
-  [USER_OBJECTS](s) {
+
+  /**
+   * Get user objects
+   * @param s
+   */
+  [USER_OBJECTS](s): GameObject[] {
     return s.game.objects[GameUser.USER];
   },
-  [COMPUTER_OBJECTS](s) {
+
+  /**
+   * Get computer objects
+   * @param s
+   */
+  [COMPUTER_OBJECTS](s): GameObject[] {
     return s.game.objects[GameUser.COMPUTER];
   },
-  [FIELD_HEIGHT](s) {
+
+  /**
+   * Get field height
+   * @param s
+   */
+  [FIELD_HEIGHT](s): number {
     return s.field.height;
   },
-  [FIELD_WIDTH](s) {
+
+  /**
+   * Get field width
+   * @param s
+   */
+  [FIELD_WIDTH](s): number {
     return s.field.width;
   },
-  [GET_GAME_SPEED](s) {
+
+  /**
+   * Get game speed
+   * @param s
+   */
+  [GET_GAME_SPEED](s): number {
     return s.game.gameSpeed;
   },
-  [GET_CURRENT_USER_OBJECT](s) {
+
+  /**
+   * Get current user game object
+   * @param s
+   */
+  [GET_CURRENT_USER_OBJECT](s): GameObject {
     return s.game.objects[GameUser.USER][s.game.objects[GameUser.USER].length - 1];
   },
-  [GET_CURRENT_COMPUTER_OBJECT](s) {
+
+  /**
+   * Get current computer object
+   * @param s
+   */
+  [GET_CURRENT_COMPUTER_OBJECT](s): GameObject {
     return s.game.objects[GameUser.COMPUTER][s.game.objects[GameUser.COMPUTER].length - 1];
   },
-  [GET_TEETER_TOTTER](s) {
+
+  /**
+   * Get teeter totter state
+   * @param s
+   */
+  [GET_TEETER_TOTTER](s): TeeterTotterClass|null {
     return s.game.teeterTotter;
   },
-  [GET_LEVEL](s) {
+
+  /**
+   * Get level count
+   * @param s
+   */
+  [GET_LEVEL](s): number {
     return s.game.level;
   },
-  [GET_TOTAL_WEIGHT](s) {
+
+  /**
+   * Get total weight
+   * @param s
+   */
+  [GET_TOTAL_WEIGHT](s): TotalWeight {
     return s.game.totalWeight;
   }
 };

@@ -13,18 +13,45 @@ import {GAME_SPEED_INCREMENT_CONST} from "@/utils/constants";
 import {UpdateTotalWeight} from "@/types/types";
 
 const mutations: MutationTree<IState> = {
-  [CHANGE_STATUS](s, status: GameStatus) {
+  /**
+   * Change game status
+   * @param s
+   * @param status
+   */
+  [CHANGE_STATUS](s, status: GameStatus): void {
     s.gameStatus = status;
   },
-  [RESET_STATE](s) {
+
+  /**
+   * Set new game state
+   * @param s
+   */
+  [RESET_STATE](s): void {
     s.game = newGame();
   },
-  [INCREASE_GAME_SPEED](s) {
+
+  /**
+   * Increase game speed
+   * @param s
+   */
+  [INCREASE_GAME_SPEED](s): void {
     s.game.gameSpeed /= GAME_SPEED_INCREMENT_CONST;
   },
-  [INCREASE_LEVEL](s) {
+
+  /**
+   * Increase game level
+   * @param s
+   */
+  [INCREASE_LEVEL](s): void {
     s.game.level++;
   },
+
+  /**
+   * Add user or computer total weight
+   * @param s
+   * @param type
+   * @param weight
+   */
   [UPDATE_TOTAL_WEIGHT](s, {type, weight}: UpdateTotalWeight) {
     s.game.totalWeight[type] += weight;
   }
