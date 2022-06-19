@@ -174,13 +174,13 @@ export default class Playground extends Vue {
   }
 
   private setMomentum() {
-    const userShoulder = this.teeterTotter.getMomentShoulder(
+    const userArm = this.teeterTotter.getMomentArm(
       getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
     );
-    const computerShoulder = this.teeterTotter.getMomentShoulder(this.computerObject.xPos);
+    const computerArm = this.teeterTotter.getMomentArm(this.computerObject.xPos);
 
-    const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
-    const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
+    const userMomentum = Math.round(getMomentum(userArm, this.userObject.weight));
+    const computerMomentum = Math.round(getMomentum(computerArm, this.computerObject.weight));
     this.teeterTotter.setMomentum(userMomentum, computerMomentum);
   }
 
