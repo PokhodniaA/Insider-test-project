@@ -13,11 +13,16 @@ export interface IState {
 export interface IGameState {
     level: number,
     gameSpeed: number,
-    objects: {
-        user: Array<GameObject>,
-        computer: Array<GameObject>
-    },
+    totalWeight: TotalWeight,
+    objects: {[key in GameUser]: Array<GameObject>},
     teeterTotter: TeeterTotter|null
+}
+
+export type TotalWeight = {[key in GameUser]: number}
+
+export type UpdateTotalWeight = {
+    type: GameUser;
+    weight: number
 }
 
 export enum GameStatus {

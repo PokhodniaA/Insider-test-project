@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex, {ActionTree, GetterTree, MutationTree} from 'vuex'
 
-import {GameStatus, GameUser, IState} from "./index.interface";
+import {GameStatus, GameUser, IState, UpdateTotalWeight} from "./index.interface";
 import {
   ADD_GAME_OBJECT,
   CONTINUE_GAME,
@@ -10,7 +10,13 @@ import {
   SET_TEETER_TOTTER,
   START_GAME
 } from "@/store/actions.const";
-import {CHANGE_STATUS, INCREASE_GAME_SPEED, INCREASE_LEVEL, RESET_STATE} from "@/store/mutation.const";
+import {
+  CHANGE_STATUS,
+  INCREASE_GAME_SPEED,
+  INCREASE_LEVEL,
+  RESET_STATE,
+  UPDATE_TOTAL_WEIGHT
+} from "@/store/mutation.const";
 import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
@@ -19,7 +25,7 @@ import {
   GET_CURRENT_COMPUTER_OBJECT,
   GET_CURRENT_USER_OBJECT,
   GET_GAME_SPEED, GET_LEVEL,
-  GET_TEETER_TOTTER,
+  GET_TEETER_TOTTER, GET_TOTAL_WEIGHT,
   USER_OBJECTS
 } from "@/store/getters.const";
 import GameObject from "@/classes/GameObject";
@@ -31,6 +37,10 @@ Vue.use(Vuex)
 
 const newGame = () => ({
   level: 0,
+  totalWeight: {
+    user: 0,
+    computer: 0
+  },
   objects: {
     user: [],
     computer: []
@@ -78,6 +88,9 @@ const getters: GetterTree<IState, IState> = {
   },
   [GET_LEVEL](s) {
     return s.game.level
+  },
+  [GET_TOTAL_WEIGHT](s) {
+    return s.game.totalWeight
   }
 }
 
@@ -93,6 +106,9 @@ const mutations: MutationTree<IState> = {
   },
   [INCREASE_LEVEL](s) {
     s.game.level++
+  },
+  [UPDATE_TOTAL_WEIGHT](s, {type, weight}: UpdateTotalWeight) {
+    s.game.totalWeight[type] += weight;
   }
 };
 // TODO: Check IState second args

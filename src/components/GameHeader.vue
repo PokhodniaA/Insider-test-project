@@ -1,53 +1,30 @@
 <template>
 <header class="header">
   <div class="container">
-    <button @click="toggleGameStatus">{{title}}</button>
+    <div>Total user weight: {{ userWeight }}</div>
+    <div>Level: {{ currentLevel }}/{{5}}</div>
+    <div>Total computer weight: {{ computerWeight }}</div>
   </div>
 </header>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {Action, Getter} from "vuex-class";
-import {CONTINUE_GAME, PAUSE_GAME, START_GAME} from "@/store/actions.const";
-import {GAME_STATUS} from "@/store/getters.const";
-import {GameStatus} from "@/store/index.interface";
+import {Getter} from "vuex-class";
+import {GET_LEVEL, GET_TOTAL_WEIGHT} from "@/store/getters.const";
+import {GameUser, TotalWeight} from "@/store/index.interface";
 
 @Component({})
 export default class Header extends Vue {
-  @Getter(GAME_STATUS) private gameStatus !:GameStatus;
-
-  @Action(START_GAME) startNewGame!: () => void;
-  @Action(PAUSE_GAME) pauseGame!: () => void;
-  @Action(CONTINUE_GAME) continueGame!: () => void;
-
-  private get title() {
-    switch (this.gameStatus) {
-      case GameStatus.PAUSE:
-      case GameStatus.END:
-      case GameStatus.NEW:
-        return 'Play';
-      case GameStatus.PLAY:
-        return 'PAUSE';
-      default:
-        return 'Play';
-    }
+  @Getter(GET_TOTAL_WEIGHT) private totalWeight !: TotalWeight;
+  @Getter(GET_LEVEL) private currentLevel !: TotalWeight;
+// TODO: поменять везде .user и .computer на enum
+  private get userWeight(): number {
+    return this.totalWeight[GameUser.USER]
   }
 
-  private toggleGameStatus() {
-    // TODO: Change toggle on play
-    switch (this.gameStatus) {
-      case GameStatus.END:
-      case GameStatus.NEW:
-        this.startNewGame();
-        break;
-      case GameStatus.PAUSE:
-        this.continueGame();
-        break;
-      case GameStatus.PLAY:
-        this.pauseGame();
-        break;
-    }
+  private get computerWeight(): number {
+    return this.totalWeight[GameUser.COMPUTER]
   }
 }
 </script>
@@ -58,5 +35,13 @@ export default class Header extends Vue {
   width: 100%;
   height: 35px;
   background-color: #fafafa;
+
+  .container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
 }
 </style>

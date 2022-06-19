@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator";
-import {Action, Getter} from 'vuex-class'
+import {Action, Getter, Mutation} from 'vuex-class'
 import TeeterTotter from '@/components/TeeterTotter.vue'
 import RandomObject from '@/components/RandomObject.vue'
 import {
@@ -40,11 +40,12 @@ import {
   GET_GAME_SPEED, GET_LEVEL, GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
-import {GameStatus} from "@/store/index.interface";
+import {GameStatus, GameUser, UpdateTotalWeight} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
 import TeeterTotterClass from "@/classes/TeeterTotter";
 import {CONTINUE_GAME, END_GAME, PAUSE_GAME, SET_NEXT_LEVEL, START_GAME} from "@/store/actions.const";
 import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
+import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
 
 export enum Keyboard {
   ENTER = 'Enter',
@@ -77,6 +78,8 @@ export default class Playground extends Vue {
   @Action(END_GAME) private endGame !: () => void;
   @Action(CONTINUE_GAME) continueGame!: () => void;
   @Action(SET_NEXT_LEVEL) setNextLevel!: () => void;
+
+  @Mutation(UPDATE_TOTAL_WEIGHT) updateTotalWeight!: (data: UpdateTotalWeight) => void;
 
 
   private ticker: number|null = null;
@@ -149,6 +152,9 @@ export default class Playground extends Vue {
         || this.computerObject.yPos >= this.fieldHeight
     ) {
       // TODO: Упали на качелю
+      this.updateTotalWeight({type: GameUser.USER, weight: this.userObject.weight})
+      this.updateTotalWeight({type: GameUser.COMPUTER, weight: this.computerObject.weight})
+
       const userShoulder = this.teeterTotter.getMomentShoulder(
           getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
       );
