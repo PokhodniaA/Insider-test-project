@@ -1,8 +1,11 @@
 <template>
-<div class="teeter">
-  <div :style="angleStyle" class="teeter__hr" />
-  <div class="teeter__triangle" />
-</div>
+  <div class="teeter">
+    <div
+      :style="angleStyle"
+      class="teeter__hr"
+    />
+    <div class="teeter__triangle" />
+  </div>
 </template>
 
 <script lang="ts">

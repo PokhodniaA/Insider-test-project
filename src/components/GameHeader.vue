@@ -1,11 +1,11 @@
 <template>
-<header class="header">
-  <div class="container">
-    <div>Total user weight: {{ userWeight }}</div>
-    <div>Level: {{ currentLevel }}/{{maxLevel}}</div>
-    <div>Total computer weight: {{ computerWeight }}</div>
-  </div>
-</header>
+  <header class="header">
+    <div class="container">
+      <div>Total user weight: {{ userWeight }}</div>
+      <div>Level: {{ currentLevel }}/{{ maxLevel }}</div>
+      <div>Total computer weight: {{ computerWeight }}</div>
+    </div>
+  </header>
 </template>
 
 <script lang="ts">

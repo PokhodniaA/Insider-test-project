@@ -1,5 +1,11 @@
 <template>
-  <div class="object" :class="objectClass" :style="objectStyles">{{weight}}</div>
+  <div
+    class="object"
+    :class="objectClass"
+    :style="objectStyles"
+  >
+    {{ weight }}
+  </div>
 </template>
 
 <script lang="ts">

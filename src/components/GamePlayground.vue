@@ -1,33 +1,39 @@
 <template>
-  <div class="playground playground-container" :style="containerStyles">
-    <div class="playground__game" :style="gameAreaStyles">
+  <div
+    class="playground playground-container"
+    :style="containerStyles"
+  >
+    <div
+      class="playground__game"
+      :style="gameAreaStyles"
+    >
       <div class="playground__field">
         <random-object
-            v-for="(user, idx) in users"
-            :key="idx + 'user'"
-            :x="user.x"
-            :y="user.y"
-            :type="user.objectType"
-            :weight="user.weight"
-            :width="user.width"
-            :height="user.heigth"
+          v-for="(user, idx) in users"
+          :key="idx + 'user'"
+          :x="user.x"
+          :y="user.y"
+          :type="user.objectType"
+          :weight="user.weight"
+          :width="user.width"
+          :height="user.heigth"
         />
       </div>
       <div class="playground__field">
         <random-object
-            v-for="(ai, idx) in computers"
-            :key="idx + 'comp'"
-            :x="ai.x"
-            :y="ai.y"
-            :type="ai.objectType"
-            :weight="ai.weight"
-            :width="ai.width"
-            :height="ai.heigth"
+          v-for="(ai, idx) in computers"
+          :key="idx + 'comp'"
+          :x="ai.x"
+          :y="ai.y"
+          :type="ai.objectType"
+          :weight="ai.weight"
+          :width="ai.width"
+          :height="ai.heigth"
         />
       </div>
     </div>
 
-    <teeter-totter class="playground__teeter"/>
+    <teeter-totter class="playground__teeter" />
   </div>
 </template>
 
@@ -98,11 +104,11 @@ export default class Playground extends Vue {
     `;
   }
 
-  public mounted() {
+  public mounted(): void {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-  public beforeDestroy() {
+  public beforeDestroy(): void {
     document.removeEventListener('keydown', this.onKeyDown)
   }
 

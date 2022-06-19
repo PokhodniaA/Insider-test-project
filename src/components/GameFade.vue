@@ -1,6 +1,9 @@
 <template>
   <transition name="fade">
-    <div v-show="showModal" class="game-fade__background">
+    <div
+      v-show="showModal"
+      class="game-fade__background"
+    >
       <h1>{{ title }}</h1>
       <p>{{ subTitle }}</p>
     </div>
