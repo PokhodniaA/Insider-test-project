@@ -16,7 +16,7 @@
           :type="user.objectType"
           :weight="user.weight"
           :width="user.width"
-          :height="user.heigth"
+          :height="user.height"
         />
       </div>
       <div class="playground__field">
@@ -28,7 +28,7 @@
           :type="ai.objectType"
           :weight="ai.weight"
           :width="ai.width"
-          :height="ai.heigth"
+          :height="ai.height"
         />
       </div>
     </div>

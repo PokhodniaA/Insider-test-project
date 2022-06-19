@@ -23,7 +23,7 @@ export default class GameObject {
    * Generate new object
    * @private
    */
-  private generateObject() {
+  private generateObject(): void {
     this.setRandomObject();
     this.setRandomWeight();
     this.setSizes();
@@ -33,7 +33,7 @@ export default class GameObject {
    * Set current object
    * @private
    */
-  private setRandomObject() {
+  private setRandomObject(): void {
     const type = getRandomNumber(1, 4);
     switch (type) {
       case 1:
@@ -52,22 +52,32 @@ export default class GameObject {
    * Set random weight
    * @private
    */
-  private setRandomWeight() {
+  private setRandomWeight(): void {
     this.weight = getRandomNumber(MIN_OBJECT_WEIGHT, MAX_OBJECT_WEIGHT);
   }
 
-  private setSizes() {
+  /**
+   * Set object sizes
+   * @private
+   */
+  private setSizes(): void {
     this.sizes = {
       width: OBJECT_SIZE_CONST,
       height: OBJECT_SIZE_CONST
     };
   }
 
+  /**
+   * Get object width
+   */
   public get width(): number {
     return this.sizes.width;
   }
 
-  public get heigth(): number {
+  /**
+   * Get objet height
+   */
+  public get height(): number {
     return this.sizes.height;
   }
 
@@ -78,6 +88,10 @@ export default class GameObject {
     return Math.floor(this.x + (this.width / 2));
   }
 
+  /**
+   * Check boundaries and set x position
+   * @param newX
+   */
   public set xPos(newX: number) {
     let x = newX;
     if (newX <= 0) {
@@ -89,10 +103,17 @@ export default class GameObject {
     this.x = x;
   }
 
+  /**
+   * Get real bottom y position
+   */
   public get yPos(): number {
-    return this.y + this.heigth;
+    return this.y + this.height;
   }
 
+  /**
+   * Set y position
+   * @param newY
+   */
   public set yPos(newY: number) {
     this.y = newY;
   }
