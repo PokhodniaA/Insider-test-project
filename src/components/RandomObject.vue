@@ -21,22 +21,34 @@ export default class RandomObject extends Vue {
   @Prop({type: Number}) readonly width?: number;
   @Prop({type: Number}) readonly height?: number;
 
+  /**
+   * Get object dimension styles
+   * @private
+   */
   private get dimensions() {
     return `width:${this.width}px; height:${this.height}px;`;
   }
 
+  /**
+   * Get object position styles
+   * @private
+   */
   private get position() {
     return `left: ${this.x}px; top: ${this.y}px;`;
   }
 
-  private get animateChangeX() {
-    return `transition: left .1s;`;
-  }
-
+  /**
+   * Get computed object styles
+   * @private
+   */
   private get objectStyles() {
-    return this.dimensions + this.position + this.animateChangeX;
+    return this.dimensions + this.position;
   }
 
+  /**
+   * Get object type class
+   * @private
+   */
   private get objectClass() {
     return this.type;
   }
@@ -51,6 +63,7 @@ export default class RandomObject extends Vue {
   align-items: center;
   justify-content: center;
   position: absolute;
+  transition: left .1s;
 }
 
 .circle {
