@@ -23,10 +23,18 @@ export default class Header extends Vue {
 
   private maxLevel = MAX_LEVEL_CONST;
 
+  /**
+   * Get total user weight
+   * @private
+   */
   private get userWeight(): number {
     return this.totalWeight[GameUser.USER];
   }
 
+  /**
+   * Get total computer weight
+   * @private
+   */
   private get computerWeight(): number {
     return this.totalWeight[GameUser.COMPUTER];
   }
