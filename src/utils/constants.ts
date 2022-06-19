@@ -6,7 +6,7 @@ export const OBJECT_SIZE_CONST = 60;
 export const MIN_OBJECT_WEIGHT = 1;
 export const MAX_OBJECT_WEIGHT = 10;
 
-export const FIELD_HEIGHT_CONST = 600;
+export const FIELD_HEIGHT_CONST = 450;
 export const FIELD_WIDTH_CONST = 600;
 
 export const TEETER_TOTTER_WIDTH = 10;
