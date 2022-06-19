@@ -39,9 +39,9 @@
 
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator";
-import {Action, Getter, Mutation} from 'vuex-class';
-import TeeterTotter from '@/components/TeeterTotter.vue';
-import RandomObject from '@/components/RandomObject.vue';
+import {Action, Getter, Mutation} from "vuex-class";
+import TeeterTotter from "@/components/TeeterTotter.vue";
+import RandomObject from "@/components/RandomObject.vue";
 import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,

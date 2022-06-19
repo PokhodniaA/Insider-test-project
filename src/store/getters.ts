@@ -10,8 +10,8 @@ import {
 } from "@/store/getters.const";
 import {GameStatus, GameUser} from "@/types/enums";
 import GameObject from '@/classes/GameObject';
-import TeeterTotterClass from '@/classes/TeeterTotter';
-import {TotalWeight} from '@/types/types';
+import TeeterTotterClass from "@/classes/TeeterTotter";
+import {TotalWeight} from "@/types/types";
 
 const getters: GetterTree<IState, IState> = {
   /**

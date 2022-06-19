@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue} from "vue-property-decorator";
 import {Getter} from "vuex-class";
 import {GET_LEVEL, GET_TOTAL_WEIGHT} from "@/store/getters.const";
 import {MAX_LEVEL_CONST} from "@/utils/constants";

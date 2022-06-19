@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
 import {GAME_SPEED_CONST, FIELD_WIDTH_CONST, FIELD_HEIGHT_CONST} from "@/utils/constants";
 import {IGameState, IState} from "@/types/interfaces";
