@@ -39,9 +39,9 @@
 
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator";
-import {Action, Getter, Mutation} from 'vuex-class'
-import TeeterTotter from '@/components/TeeterTotter.vue'
-import RandomObject from '@/components/RandomObject.vue'
+import {Action, Getter, Mutation} from 'vuex-class';
+import TeeterTotter from '@/components/TeeterTotter.vue';
+import RandomObject from '@/components/RandomObject.vue';
 import {
   COMPUTER_OBJECTS,
   FIELD_HEIGHT,
@@ -67,13 +67,13 @@ import {GameStatus, GameUser, Keyboard} from "@/types/enums";
   components: {
     TeeterTotter,
     RandomObject
-  },
+  }
 })
 
 export default class Playground extends Vue {
-  @Getter(GAME_STATUS) private gameStatus !:GameStatus;
-  @Getter(USER_OBJECTS) private users !:Array<GameObject>;
-  @Getter(COMPUTER_OBJECTS) private computers !:Array<GameObject>;
+  @Getter(GAME_STATUS) private gameStatus !: GameStatus;
+  @Getter(USER_OBJECTS) private users !: Array<GameObject>;
+  @Getter(COMPUTER_OBJECTS) private computers !: Array<GameObject>;
   @Getter(FIELD_HEIGHT) private fieldHeight !: number;
   @Getter(FIELD_WIDTH) private fieldWidth !: number;
   @Getter(GET_GAME_SPEED) private gameSpeed !: number;
@@ -90,10 +90,10 @@ export default class Playground extends Vue {
 
   @Mutation(UPDATE_TOTAL_WEIGHT) updateTotalWeight!: (data: UpdateTotalWeight) => void;
 
-  private ticker: number|null = null;
+  private ticker: number | null = null;
 
   private get gameAreaStyles() {
-    return `height: ${this.fieldHeight}px;`
+    return `height: ${this.fieldHeight}px;`;
   }
 
   private get containerStyles() {
@@ -109,7 +109,7 @@ export default class Playground extends Vue {
   }
 
   public beforeDestroy(): void {
-    document.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keydown', this.onKeyDown);
   }
 
   private onKeyDown(event: KeyboardEvent) {
@@ -138,22 +138,22 @@ export default class Playground extends Vue {
           return;
         }
 
-        this.userObject.xPos = this.userObject.x - this.userObject.width / 2
+        this.userObject.xPos = this.userObject.x - this.userObject.width / 2;
         break;
       case Keyboard.RIGHT:
         if (this.gameStatus !== GameStatus.PLAY) {
           return;
         }
 
-        this.userObject.xPos = this.userObject.x + this.userObject.width / 2
+        this.userObject.xPos = this.userObject.x + this.userObject.width / 2;
         break;
     }
   }
 
   private onTick() {
     if (
-        this.userObject.yPos >= this.fieldHeight
-        || this.computerObject.yPos >= this.fieldHeight
+      this.userObject.yPos >= this.fieldHeight
+      || this.computerObject.yPos >= this.fieldHeight
     ) {
       this.updateTotalWeight({type: GameUser.USER, weight: this.userObject.weight});
       this.updateTotalWeight({type: GameUser.COMPUTER, weight: this.computerObject.weight});
@@ -161,31 +161,31 @@ export default class Playground extends Vue {
       this.setMomentum();
 
       if (this.gameLevel < MAX_LEVEL_CONST && this.teeterTotter.isContinueGame) {
-        this.setNextLevel()
+        this.setNextLevel();
         this.onPauseGame();
         this.onStartGame();
       } else {
         this.endGame();
       }
     } else {
-      this.userObject.yPos = this.userObject.y + MOVE_PIXELS_PER_TICK
-      this.computerObject.yPos = this.computerObject.y + MOVE_PIXELS_PER_TICK
+      this.userObject.yPos = this.userObject.y + MOVE_PIXELS_PER_TICK;
+      this.computerObject.yPos = this.computerObject.y + MOVE_PIXELS_PER_TICK;
     }
   }
 
   private setMomentum() {
     const userShoulder = this.teeterTotter.getMomentShoulder(
-        getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
+      getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
     );
     const computerShoulder = this.teeterTotter.getMomentShoulder(this.computerObject.xPos);
 
     const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
     const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
-    this.teeterTotter.setMomentum(userMomentum, computerMomentum)
+    this.teeterTotter.setMomentum(userMomentum, computerMomentum);
   }
 
   private onStartGame() {
-    this.ticker = setInterval(this.onTick, this.gameSpeed)
+    this.ticker = setInterval(this.onTick, this.gameSpeed);
   }
 
   private onPauseGame() {
@@ -218,6 +218,7 @@ export default class Playground extends Vue {
 
 .playground {
   padding-bottom: 50px;
+
   &__teeter {
 
   }

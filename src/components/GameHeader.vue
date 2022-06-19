@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import {Getter} from "vuex-class";
 import {GET_LEVEL, GET_TOTAL_WEIGHT} from "@/store/getters.const";
 import {MAX_LEVEL_CONST} from "@/utils/constants";
@@ -24,11 +24,11 @@ export default class Header extends Vue {
   private maxLevel = MAX_LEVEL_CONST;
 
   private get userWeight(): number {
-    return this.totalWeight[GameUser.USER]
+    return this.totalWeight[GameUser.USER];
   }
 
   private get computerWeight(): number {
-    return this.totalWeight[GameUser.COMPUTER]
+    return this.totalWeight[GameUser.COMPUTER];
   }
 }
 </script>

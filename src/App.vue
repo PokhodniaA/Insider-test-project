@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import GameHeader from '@/components/GameHeader.vue';
-import GamePlayground from '@/components/GamePlayground.vue'
+import GamePlayground from '@/components/GamePlayground.vue';
 import GameFade from "@/components/GameFade.vue";
 
 @Component({
@@ -17,13 +17,15 @@ import GameFade from "@/components/GameFade.vue";
     GameHeader,
     GamePlayground,
     GameFade
-  },
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+}
 </script>
 
 <style lang="scss">
 @import "scss/index.scss";
+
 #app {
   height: 100%;
   max-height: 100vh;

@@ -24,7 +24,7 @@ import {GameStatus} from "@/types/enums";
 
 @Component({})
 export default class GameFade extends Vue {
-  @Getter(GAME_STATUS) private gameStatus !:GameStatus;
+  @Getter(GAME_STATUS) private gameStatus !: GameStatus;
 
   private get showModal(): boolean {
     switch (this.gameStatus) {
@@ -42,9 +42,9 @@ export default class GameFade extends Vue {
   private get title(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        return PAUSE_MESSAGE
+        return PAUSE_MESSAGE;
       case GameStatus.END:
-        return END_MESSAGE
+        return END_MESSAGE;
       default:
         return '';
     }
@@ -53,9 +53,9 @@ export default class GameFade extends Vue {
   private get subTitle(): string {
     switch (this.gameStatus) {
       case GameStatus.PAUSE:
-        return CONTINUE_SUBTITLE_MESSAGE
+        return CONTINUE_SUBTITLE_MESSAGE;
       case GameStatus.END:
-        return NEW_SUBTITLE_MESSAGE
+        return NEW_SUBTITLE_MESSAGE;
       default:
         return '';
     }
@@ -73,7 +73,7 @@ export default class GameFade extends Vue {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +86,7 @@ export default class GameFade extends Vue {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
+
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }

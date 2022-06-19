@@ -22,7 +22,7 @@ export default class TeeterTotter extends Vue {
     if (!this.teeterTotter) {
       return '';
     }
-    return `transform: rotate(${this.teeterTotter.rotateAngle}deg);`
+    return `transform: rotate(${this.teeterTotter.rotateAngle}deg);`;
   }
 
 }

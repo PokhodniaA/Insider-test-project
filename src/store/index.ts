@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 import {GAME_SPEED_CONST, FIELD_WIDTH_CONST, FIELD_HEIGHT_CONST} from "@/utils/constants";
-import {IState} from "@/types/interfaces";
+import {IGameState, IState} from "@/types/interfaces";
 import {GameStatus} from "@/types/enums";
 import mutations from "@/store/mutation";
 import getters from "@/store/getters";
 import actions from "@/store/actions";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export const newGame = () => ({
+export const newGame = (): IGameState => ({
   level: 0,
   totalWeight: {
     user: 0,
@@ -30,12 +30,12 @@ const state: IState = {
   field: {
     width: FIELD_WIDTH_CONST,
     height: FIELD_HEIGHT_CONST
-  },
+  }
 };
 
 export default new Vuex.Store({
   state,
   mutations,
   actions,
-  getters,
-})
+  getters
+});
