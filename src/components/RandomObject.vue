@@ -41,6 +41,8 @@ export default class RandomObject extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/_variables.scss";
+
 .object {
   // TODO: Calculate width and height
   width: 60px;
@@ -53,15 +55,15 @@ export default class RandomObject extends Vue {
 
 .circle {
   clip-path: circle(50% at 50% 50%);
-  background-color: #ff7043;
+  background-color: $circle-bg;
 }
 
 .triangle {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: #ffa726;
+  background-color: $triangle-bg;
 }
 
 .rectangle {
-  background-color: #9ccc65;
+  background-color: $rectangle-bg;
 }
 </style>

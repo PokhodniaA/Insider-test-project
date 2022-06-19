@@ -26,7 +26,7 @@ export default class TeeterTotter extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// TODO: Add func to adapt width to px 1m = 60px
+@import "@/scss/_variables.scss";
 
 .teeter {
   display: flex;
@@ -38,15 +38,15 @@ export default class TeeterTotter extends Vue {
   &__hr {
     width: 100%;
     height: 10px;
-    background-color: #CCC;
+    background-color: $teeter-bg;
     transition: transform .1s;
   }
 
   &__triangle {
-    width: 100px;
-    height: 100px;
+    width: $teeter-triangle-size;
+    height: $teeter-triangle-size;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    background-color: #c7c7c7;
+    background-color: $teeter-bg;
   }
 }
 </style>

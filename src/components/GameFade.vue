@@ -66,6 +66,8 @@ export default class GameFade extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/_variables.scss";
+
 .game-fade {
   &__background {
     position: absolute;
@@ -78,7 +80,7 @@ export default class GameFade extends Vue {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: #fafafa;
+    color: $fade-color;
     z-index: 10;
   }
 }

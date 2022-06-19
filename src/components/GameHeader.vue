@@ -30,11 +30,12 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// TODO: Set height to variables
+@import "@/scss/_variables.scss";
+
 .header {
   width: 100%;
-  height: 35px;
-  background-color: #fafafa;
+  height: $header-height;
+  background-color: $bg-main;
 
   .container {
     width: 100%;

@@ -204,6 +204,8 @@ export default class Playground extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/_variables.scss";
+
 .playground {
   padding-bottom: 50px;
   &__teeter {
@@ -215,7 +217,7 @@ export default class Playground extends Vue {
     height: 100%;
     display: flex;
     z-index: 1;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid $teeter-line-color;
   }
 
   &__field {
@@ -224,8 +226,6 @@ export default class Playground extends Vue {
   }
 }
 
-// TODO: get header height from variables
-// TODO: Add func to adapt width to px 1m = 60px
 .playground-container {
   position: relative;
   margin: 20px auto;
