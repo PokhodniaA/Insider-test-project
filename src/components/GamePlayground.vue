@@ -145,26 +145,14 @@ export default class Playground extends Vue {
   }
 
   private onTick() {
-    // TODO: поставить проверку в начале
-    this.userObject.yPos = this.userObject.y + MOVE_PIXELS_PER_TICK
-    this.computerObject.yPos = this.computerObject.y + MOVE_PIXELS_PER_TICK
-
     if (
         this.userObject.yPos >= this.fieldHeight
         || this.computerObject.yPos >= this.fieldHeight
     ) {
-      // TODO: вынести в отдельные ф-ии
-      this.updateTotalWeight({type: GameUser.USER, weight: this.userObject.weight})
-      this.updateTotalWeight({type: GameUser.COMPUTER, weight: this.computerObject.weight})
+      this.updateTotalWeight({type: GameUser.USER, weight: this.userObject.weight});
+      this.updateTotalWeight({type: GameUser.COMPUTER, weight: this.computerObject.weight});
 
-      const userShoulder = this.teeterTotter.getMomentShoulder(
-          getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
-      );
-      const computerShoulder = this.teeterTotter.getMomentShoulder(this.computerObject.xPos);
-
-      const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
-      const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
-      this.teeterTotter.setMomentum(userMomentum, computerMomentum)
+      this.setMomentum();
 
       if (this.gameLevel < MAX_LEVEL_CONST && this.teeterTotter.isContinueGame) {
         this.setNextLevel()
@@ -173,7 +161,21 @@ export default class Playground extends Vue {
       } else {
         this.endGame();
       }
+    } else {
+      this.userObject.yPos = this.userObject.y + MOVE_PIXELS_PER_TICK
+      this.computerObject.yPos = this.computerObject.y + MOVE_PIXELS_PER_TICK
     }
+  }
+
+  private setMomentum() {
+    const userShoulder = this.teeterTotter.getMomentShoulder(
+        getLeftDistanceFromCenter(this.userObject.xPos, 0, this.fieldWidth / 2)
+    );
+    const computerShoulder = this.teeterTotter.getMomentShoulder(this.computerObject.xPos);
+
+    const userMomentum = Math.round(getMomentum(userShoulder, this.userObject.weight));
+    const computerMomentum = Math.round(getMomentum(computerShoulder, this.computerObject.weight));
+    this.teeterTotter.setMomentum(userMomentum, computerMomentum)
   }
 
   private onStartGame() {
