@@ -14,18 +14,18 @@ import {ObjectTypes} from "@/types/enums";
 
 @Component({})
 export default class RandomObject extends Vue {
-  @Prop({type: Number}) readonly x?: number;
-  @Prop({type: Number}) readonly y?: number;
-  @Prop({type: Number}) readonly weight?: number;
-  @Prop({type: String}) readonly type?: ObjectTypes;
-  @Prop({type: Number}) readonly width?: number;
-  @Prop({type: Number}) readonly height?: number;
+  @Prop({type: Number}) readonly x!: number;
+  @Prop({type: Number}) readonly y!: number;
+  @Prop({type: Number}) readonly weight!: number;
+  @Prop({type: String}) readonly type!: ObjectTypes;
+  @Prop({type: Number}) readonly width!: number;
+  @Prop({type: Number}) readonly height!: number;
 
   /**
    * Get object dimension styles
    * @private
    */
-  private get dimensions() {
+  private get dimensions(): string {
     return `width:${this.width}px; height:${this.height}px;`;
   }
 
@@ -33,7 +33,7 @@ export default class RandomObject extends Vue {
    * Get object position styles
    * @private
    */
-  private get position() {
+  private get position(): string {
     return `left: ${this.x}px; top: ${this.y}px;`;
   }
 
@@ -41,7 +41,7 @@ export default class RandomObject extends Vue {
    * Get computed object styles
    * @private
    */
-  private get objectStyles() {
+  private get objectStyles(): string {
     return this.dimensions + this.position;
   }
 
@@ -49,7 +49,7 @@ export default class RandomObject extends Vue {
    * Get object type class
    * @private
    */
-  private get objectClass() {
+  private get objectClass(): string {
     return this.type;
   }
 }

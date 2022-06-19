@@ -18,7 +18,11 @@ import TeeterTotterClass from "@/classes/TeeterTotter";
 export default class TeeterTotter extends Vue {
   @Getter(GET_TEETER_TOTTER) private teeterTotter !: TeeterTotterClass;
 
-  private get angleStyle() {
+  /**
+   * Rotate teeter totter
+   * @private
+   */
+  private get angleStyle(): string {
     if (!this.teeterTotter) {
       return '';
     }
