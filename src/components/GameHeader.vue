@@ -12,8 +12,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {Getter} from "vuex-class";
 import {GET_LEVEL, GET_TOTAL_WEIGHT} from "@/store/getters.const";
-import {GameUser, TotalWeight} from "@/store/index.interface";
 import {MAX_LEVEL_CONST} from "@/utils/constants";
+import {TotalWeight} from "@/types/types";
+import {GameUser} from "@/types/enums";
 
 @Component({})
 export default class Header extends Vue {

@@ -11,13 +11,13 @@
 import {Component, Vue} from "vue-property-decorator";
 import {Getter} from "vuex-class";
 import {GAME_STATUS} from "@/store/getters.const";
-import {GameStatus} from "@/store/index.interface";
 import {
   CONTINUE_SUBTITLE_MESSAGE,
   END_MESSAGE,
   NEW_SUBTITLE_MESSAGE,
   PAUSE_MESSAGE
 } from "@/utils/constants";
+import {GameStatus} from "@/types/enums";
 
 @Component({})
 export default class GameFade extends Vue {

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex, {ActionTree, GetterTree, MutationTree} from 'vuex'
 
-import {GameStatus, GameUser, IState, UpdateTotalWeight} from "./index.interface";
 import {
   ADD_GAME_OBJECT,
   CONTINUE_GAME,
@@ -32,8 +31,9 @@ import GameObject from "@/classes/GameObject";
 import {getRandomPosition} from "@/utils/calculates.utils";
 import TeeterTotterClass from "@/classes/TeeterTotter";
 import {GAME_SPEED_CONST, FIELD_WIDTH_CONST, FIELD_HEIGHT_CONST, GAME_SPEED_INCREMENT_CONST} from "@/utils/constants";
-
-
+import {IState} from "@/types/interfaces";
+import {UpdateTotalWeight} from "@/types/types";
+import {GameStatus, GameUser} from "@/types/enums";
 
 Vue.use(Vuex)
 

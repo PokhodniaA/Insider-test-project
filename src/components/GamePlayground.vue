@@ -44,13 +44,14 @@ import {
   GET_GAME_SPEED, GET_LEVEL, GET_TEETER_TOTTER,
   USER_OBJECTS
 } from "@/store/getters.const";
-import {GameStatus, GameUser, UpdateTotalWeight} from "@/store/index.interface";
 import GameObject from "@/classes/GameObject";
 import TeeterTotterClass from "@/classes/TeeterTotter";
 import {CONTINUE_GAME, END_GAME, PAUSE_GAME, SET_NEXT_LEVEL, START_GAME} from "@/store/actions.const";
 import {getLeftDistanceFromCenter, getMomentum} from "@/utils/calculates.utils";
 import {UPDATE_TOTAL_WEIGHT} from "@/store/mutation.const";
 import {MAX_LEVEL_CONST, MOVE_PIXELS_PER_TICK} from "@/utils/constants";
+import {UpdateTotalWeight} from "@/types/types";
+import {GameStatus, GameUser} from "@/types/enums";
 
 export enum Keyboard {
   ENTER = 'Enter',
