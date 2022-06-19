@@ -65,10 +65,10 @@ const getters: GetterTree<IState, IState> = {
     return s.gameStatus
   },
   [USER_OBJECTS](s) {
-    return s.game.objects.user;
+    return s.game.objects[GameUser.USER];
   },
   [COMPUTER_OBJECTS](s) {
-    return s.game.objects.computer
+    return s.game.objects[GameUser.COMPUTER]
   },
   [FIELD_HEIGHT](s) {
     return s.field.height
@@ -80,10 +80,10 @@ const getters: GetterTree<IState, IState> = {
     return s.game.gameSpeed
   },
   [GET_CURRENT_USER_OBJECT](s) {
-    return s.game.objects.user[s.game.objects.user.length - 1];
+    return s.game.objects[GameUser.USER][s.game.objects[GameUser.USER].length - 1];
   },
   [GET_CURRENT_COMPUTER_OBJECT](s) {
-    return s.game.objects.computer[s.game.objects.computer.length - 1];
+    return s.game.objects[GameUser.COMPUTER][s.game.objects[GameUser.COMPUTER].length - 1];
   },
   [GET_TEETER_TOTTER](s) {
     return s.game.teeterTotter;

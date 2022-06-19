@@ -22,7 +22,7 @@ export default class Header extends Vue {
   @Getter(GET_LEVEL) private currentLevel !: TotalWeight;
 
   private maxLevel = MAX_LEVEL_CONST;
-// TODO: поменять везде .user и .computer на enum
+
   private get userWeight(): number {
     return this.totalWeight[GameUser.USER]
   }
