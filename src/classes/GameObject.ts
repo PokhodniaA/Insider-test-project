@@ -6,12 +6,11 @@ import {ObjectTypes} from "@/types/enums";
 import {Params, Sizes} from "@/types/types";
 
 export default class GameObject {
-    // TODO: сделать вес и тип приватнфми и сделать геттеры
     public x!: number;
     public y!: number;
     public objectType!: ObjectTypes;
     public weight!: number
-    private sizes!: Sizes
+    public sizes!: Sizes
 
     constructor(params: Params) {
         this.generateObject()
